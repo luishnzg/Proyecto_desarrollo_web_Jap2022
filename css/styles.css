@@ -188,3 +188,21 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+/* Codigo agregado por Luis */
+
+.containerlogin {
+  width: 500px;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  background: rgba(156, 166, 189, 0.849);
+}
+.containerlogin h1 {
+  padding: 35px;
+  text-align: center;
+}
+.containerlogin div input {
+  outline: none;
+}
