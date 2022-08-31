@@ -7,7 +7,12 @@ if(email.value == "" || clave.value == "") {
     
 }
 else {
-   
-    window.location.href = "index.html";}
+    window.location.href = "index.html";
+    seteoLocalStorage();}
+
 }
 )
+
+function seteoLocalStorage() {
+    localStorage.setItem('usuario', email.value)
+}
