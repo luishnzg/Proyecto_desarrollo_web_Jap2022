@@ -8,6 +8,7 @@ let DOLLAR_SYMBOL = "USD ";
 let PESO_SYMBOL = "UYU ";
 let PERCENTAGE_SYMBOL = '%';
 let MSG = "FUNCIONALIDAD NO IMPLEMENTADA";
+//let usuarioCorreo = localStorage.getItem('usuario');
 
 //Función que se utiliza para actualizar los costos de publicación
 function updateTotalCosts(){
@@ -146,4 +147,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             });
         }
     });
+   document.getElementById("usuarioNavSell").innerHTML = `<a class="nav-link" href="" >${localStorage.getItem('usuario')}</a>`
+  
 });
+

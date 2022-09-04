@@ -1,12 +1,15 @@
-const products_autos_url = "https://japceibal.github.io/emercado-api/cats_products/101.json"
-let products_autos_Array = [];
+let catID = localStorage.getItem("catID");
+let products_Array = [];
+let min = undefined;
+let max = undefined;
 
 function showProductList(array){
 
     let htmlContentToAppend = "";
     for(let i = 0; i < array.products.length; i++){
         let products = array.products[i];
-
+       products.cost = parseInt(products.cost);
+      if ((products.cost >= min || min == undefined)  && (products.cost <= max || max == undefined)){
             htmlContentToAppend += `
             <div class="list-group-item list-group-item-action" id="`+ products.id +`">
                 <div class="row">
@@ -24,21 +27,78 @@ function showProductList(array){
     
                     </div>
                 </div>
-            </div>
-            `
+            </div>`;
+            document.getElementById("container-productos").innerHTML = htmlContentToAppend; 
+      }
+      else {
+      document.getElementById("container-productos").innerHTML = htmlContentToAppend;
+      }
         }
 
-        document.getElementById("container-productos").innerHTML = htmlContentToAppend;
+        
     }
 
 
 document.addEventListener("DOMContentLoaded", function(){
-    getJSONData(products_autos_url).then(function(resultObj){
+    //Se modifica el getjsondata  para que busque la contsante donde estan todos los productos
+    //se concatena con la variable catID que usa get item para buscar el ID de la llave cat ID que 
+    //lleva cada categoria del producto cuando hago click en una categoria de productos en categories.js
+    getJSONData(PRODUCTS_URL + catID + EXT_TYPE).then(function(resultObj){
         if (resultObj.status === "ok"){
-            products_autos_Array = resultObj.data
-            showProductList(products_autos_Array)
+            products_Array = resultObj.data
+            showProductList(products_Array)
         
         }
     }
     )
+    //Identifica el elemento con un ID especifico para inyectarle codigo HTML mas la informacion que esta en el localstorage
+    document.getElementById("usuarioNavProducts").innerHTML = `<a class="nav-link" href="" >${localStorage.getItem('usuario')}</a>`;
+
+
+    document.getElementById("filtrarProductos").addEventListener("click", function(){
+        
+        if (document.getElementById("min-precio").value != "") {
+            min = parseInt(document.getElementById("min-precio").value);
+        }
+        else {
+            min = undefined;
+        }
+        if (document.getElementById("max-precio").value != ""){
+            max = parseInt(document.getElementById("max-precio").value);
+        }
+        else {
+            max = undefined;
+        }
+       
+        showProductList(products_Array)
+    })
+document.getElementById("limpiarProductos").addEventListener("click", function(){
+    min = undefined;
+    max =undefined;
+    document.getElementById("max-precio").value = "";
+    document.getElementById("min-precio").value = "";
+    showProductList(products_Array);
+
+
+
+})
+document.getElementById("ordenarAsc").addEventListener("click", function(){
+    products_Array.products.sort(function (a, b){
+        return parseInt(b.cost) - parseInt(a.cost)
+})
+    showProductList(products_Array);
+})
+document.getElementById("ordenarDesc").addEventListener("click", function(){
+    products_Array.products.sort(function (a, b){
+        return parseInt(a.cost) - parseInt(b.cost)
+})
+    showProductList(products_Array);
+})
+document.getElementById("ordenarArticulo").addEventListener("click", function(){
+    products_Array.products.sort(function (a, b){
+        return parseInt(b.soldCount) - parseInt(a.soldCount)
+})
+    showProductList(products_Array);
+})
+
     })
