@@ -22,7 +22,7 @@ let getJSONData = function(url){
     //el fetch nos devuelve una promesa, es decir, nos promete devolver algo que va a ocurrir
     return fetch(url)
     //.then es parecido al await, se ejecuta solo cuando el fetch devuelva algo
-    // el parmetro del .then es una funcion que actua sobre lo que nos devuelve el fetch
+    // el parametro del .then es una funcion que actua sobre lo que nos devuelve el fetch
     .then(response => {
       if (response.ok) {
         return response.json();

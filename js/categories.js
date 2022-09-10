@@ -34,7 +34,8 @@ function sortCategories(criteria, array){
 
     return result;
 }
-
+// funcion que se usa para guardar el ID del objeto al cual le damos click al local storage y redirige a la pagina
+// de la categoria del producto, se usara esta misma funcion en otras instancias para no repetir codigo
 function setCatID(id) {
     localStorage.setItem("catID", id);
     window.location = "products.html"
