@@ -1,84 +1,82 @@
 let productsID = localStorage.getItem("productID");
-let productInfo = [];
+let productInfo;
 let productComments = [];
+function printImages(x) {
+    let htmlProducInfoContentAppendTittle =  `<div> <h4> Imagenes ilustrativas </h4></div> <br>`;
+    let htmlProducInfoContentAppend = "";
+    for (let i = 0; i < x.images.length; i++) {
+        let array = x;
+        htmlProducInfoContentAppend += 
+        `<img src="${array.images[i]}" alt="${array.description}" class="img-thumbnail col-3">`;
+        
+    }
+    document.getElementById("containerProductInfoImages").innerHTML = htmlProducInfoContentAppendTittle +  htmlProducInfoContentAppend;
 
-function showProductInfo() {
-    let htmlProducInfoContentAppend =
-        `<div>
-        <h2>${productInfo.name}
-        </h2>
+};
+function showProductInfo(x) {
+    let array = x;
+   let htmlProducInfoContentAppend =
+      `
+      <div>
+      <div style="margin:50px">
+            <h2>${array.name}
+            </h2>
+        </div>
         <hr>
-        </div>
         <div>
-        <h4> Precio </h4>
-        <p>${productInfo.currency} ${productInfo.cost}</p>
-        <h4> Descripcion </h4>
-        <p>${productInfo.description}</p>
-        <h4> Categoria </h4>
-        <p>${productInfo.category}</p>
-        <h4> Cantidad de vendidos </h4>
-        <p>${productInfo.soldCount}</p>
-        </div>
-        <div class="row">
-        <h4> Imagenes ilustrativas </h4>
-        <img src="${productInfo.images[0]}" alt="${productInfo.description}" class="img-thumbnail col-3">
-        <img src="${productInfo.images[1]}" alt="${productInfo.description}" class="img-thumbnail col-3">
-        <img src="${productInfo.images[2]}" alt="${productInfo.description}" class="img-thumbnail col-3">
-        <img src="${productInfo.images[3]}" alt="${productInfo.description}" class="img-thumbnail col-3">
+            <h4> Precio </h4>
+            <p>${array.currency} ${array.cost}</p>
+            <h4> Descripcion </h4>
+            <p>${array.description}</p>
+            <h4> Categoria </h4>
+            <p>${array.category}</p>
+            <h4> Cantidad de vendidos </h4>
+            <p>${array.soldCount}</p>
         </div>
         </div>
     `;
-    /* 
-     <div class="list-group-item list-group-item-action" onclick="setProductID(${products.id})">
-         <div class="row">
-             <div class="col-3">
-                 <img src="${products.image}" alt="${products.description}" class="img-thumbnail">
-             </div>
-             <div class="col">
-                 <div class="d-flex w-100 justify-content-between">
-                     <div class="mb-1">
-                     <h4>${products.name} - ${products.currency} ${products.cost}</h4> 
-                     <p>${products.description}</p> 
-                     </div>
-                     <small class="text-muted">${products.soldCount} artículos</small> 
-                 </div>
- 
-             </div>
-         </div>
-     </div>`;*/
     document.getElementById("containerProductInfo").innerHTML = htmlProducInfoContentAppend;
 };
+
+function printComments(x) {
+    let htmlProducInfoContentAppend = "";
+for (let i = 0; i < x.length; i++) {
+    let array = x[i];
+    htmlProducInfoContentAppend += 
+    `
+    <div id=${array.product}>
+    <p>${array.description} </p>
+    </div>
+
+    `;
+    document.getElementById("containerProductInfoComments").innerHTML = htmlProducInfoContentAppend;
+
+    
+}
+
+};
+
+/*"product": 50921,
+"score": 3,
+"description": "Ya llevo un año con este auto y la verdad que tiene sus ventajas y desventajas",
+"user": "juan_pedro",
+"dateTime": "2020-02-25 18:03:52"
+},*/
 
 document.addEventListener("DOMContentLoaded", function () {
     getJSONData(PRODUCT_INFO_URL + productsID + EXT_TYPE).then(function (resultObj) {
         if (resultObj.status === "ok") {
             productInfo = resultObj.data;
             showProductInfo(productInfo);
+            printImages(productInfo);
 
         }
     })
     getJSONData(PRODUCT_INFO_COMMENTS_URL + productsID + EXT_TYPE).then(function (resultObj) {
         if (resultObj.status === "ok") {
             productComments = resultObj.data;
+            printComments(productComments);
         }
     })
 })
 
-/* `
-            <div class="list-group-item list-group-item-action" onclick="setProductID(${products.id})">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${products.image}" alt="${products.description}" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <div class="mb-1">
-                            <h4>${products.name} - ${products.currency} ${products.cost}</h4> 
-                            <p>${products.description}</p> 
-                            </div>
-                            <small class="text-muted">${products.soldCount} artículos</small> 
-                        </div>
-    
-                    </div>
-                </div>
-            </div>`*/
