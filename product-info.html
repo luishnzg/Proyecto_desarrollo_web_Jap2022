@@ -30,7 +30,7 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" id="usuarioNavProductsInfo">
           </li>
         </ul>
       </div>
@@ -39,10 +39,35 @@
   <main>
     <div class="container" id="containerProductInfo">
     </div>
-    <div class="container" id="containerProductInfoImages" class="row">
+    <div class="container" >
+      <h4> Imagenes ilustrativas </h4>
+      <div id="containerProductInfoImages"> </div>
     </div>
-    <div class="container" id="containerProductInfoComments">
+    <div class="container mt-4">
+      <h4> Comentarios </h4>
+      <div id="containerProductInfoComments">
+      </div>
     </div>
+    <div class="container" id="containerProductInfoNewComment">
+      <h4 class="mt-4">Comentar</h4>
+      <div class="col-6">
+        <label class="form-label">Tu opinion</label>
+        <textarea class="form-control" id="opinion"></textarea>
+      </div>
+      <div class="col-2 mt-4">
+        <label class="form-label">Tu puntuacion</label>
+        <input list="scoreList" class="form-control" placeholder="1" id="scoreListInput">
+        <datalist id="scoreList">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </datalist>
+      </div>
+      <div class="mt-4">
+        <button type="button" class="btn btn-primary" id="productInfoCommentBtn">Enviar</button>
+      </div>
   </main>
   <footer class="text-muted">
     <div class="container">
