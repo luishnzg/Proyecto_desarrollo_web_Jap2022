@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
     
         }
-        document.getElementById("usuarioNavCategories").innerHTML = `<a class="nav-link" href="" >${localStorage.getItem('usuario')}</a>`
+        //document.getElementById("usuarioNavCategories").innerHTML = `<a class="nav-link" href="" >${localStorage.getItem('usuario')}</a>`
     });
 
     document.getElementById("sortAsc").addEventListener("click", function(){

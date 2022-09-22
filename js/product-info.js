@@ -39,6 +39,23 @@ function showProductInfo(x) {
     `;
     document.getElementById("containerProductInfo").innerHTML = htmlProducInfoContentAppend;
 };
+function setRelatedProductID(id) {
+    localStorage.setItem("productID", id);
+   window.location.href = "product-info.html";
+}
+function showRelatedProducts(x) {
+
+    let htmlRelatedProductAppend ="";
+    for (let i = 0; i < x.relatedProducts.length; i++) {
+        let otherProduct = x.relatedProducts[i];
+       htmlRelatedProductAppend += 
+        `<img src="${otherProduct.image}" class="img-thumbnail  col-3" alt="${otherProduct.name}" onclick="setRelatedProductID(${otherProduct.id})">`;
+        
+    }
+    document.getElementById("relatedProducts").innerHTML = htmlRelatedProductAppend;
+ 
+};
+
 
 function printComments(x) {
     let htmlProducInfoContentAppend = "";
@@ -66,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
             productInfo = resultObj.data;
             showProductInfo(productInfo);
             printImages(productInfo);
-
+            showRelatedProducts(productInfo);
         }
     });
     getJSONData(PRODUCT_INFO_COMMENTS_URL + productsID + EXT_TYPE).then(function (resultObj) {
@@ -98,6 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
         delete newObj.dateTime;
 
     })
-
+    
 })
 
