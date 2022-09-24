@@ -19,12 +19,11 @@ function printImages(x) {
         <div class="carousel-item" id="carouselNotActive">
         <img src="${array.images[i]}" class="d-block w-100" alt="${array.description}">
         </div>
-       
         `;
         
     }
     document.getElementById("carouselPrint").innerHTML = htmlProducInfoContentAppendActive + htmlProducInfoContentAppend;
-//<img src="" alt="" class="img-thumbnail  col-3">
+
 };
 function showProductInfo(x) {
     let array = x;
