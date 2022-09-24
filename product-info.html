@@ -30,7 +30,7 @@
           <li class="nav-item">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item" id="usuarioNavProductsInfo">
+          <li id="usuarioNav">
           </li>
         </ul>
       </div>
@@ -39,9 +39,26 @@
   <main>
     <div class="container" id="containerProductInfo">
     </div>
-    <div class="container" >
+    <div class="container">
       <h4> Imagenes ilustrativas </h4>
-      <div id="containerProductInfoImages"> </div>
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner" id="carouselPrint">
+         
+        </div>
+        <div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <!--El span le da el icono a las felchas del carrousel-->
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
     </div>
     <div class="container mt-4">
       <h4> Comentarios </h4>
@@ -75,7 +92,7 @@
 
         </div>
       </div>
-      
+
   </main>
   <footer class="text-muted">
     <div class="container">

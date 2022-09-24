@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function(e){
             });
         }
     });
-   document.getElementById("usuarioNavSell").innerHTML = `<a class="nav-link" href="" >${localStorage.getItem('usuario')}</a>`
+  
   
 });
 

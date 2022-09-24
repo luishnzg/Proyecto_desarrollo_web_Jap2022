@@ -5,15 +5,26 @@ let newObj = {};
 
 function printImages(x) {
     
+    let htmlProducInfoContentAppendActive = "";
     let htmlProducInfoContentAppend = "";
     for (let i = 0; i < x.images.length; i++) {
         let array = x;
+        htmlProducInfoContentAppendActive = 
+        `
+        <div class="carousel-item active" id="carouselActive">
+        <img src="${array.images[0]}" class="d-block w-100" alt="${array.description}"> 
+        </div> ` 
         htmlProducInfoContentAppend += 
-        `<img src="${array.images[i]}" alt="${array.description}" class="img-thumbnail  col-3">`;
+        `
+        <div class="carousel-item" id="carouselNotActive">
+        <img src="${array.images[i]}" class="d-block w-100" alt="${array.description}">
+        </div>
+       
+        `;
         
     }
-    document.getElementById("containerProductInfoImages").innerHTML = htmlProducInfoContentAppend;
-
+    document.getElementById("carouselPrint").innerHTML = htmlProducInfoContentAppendActive + htmlProducInfoContentAppend;
+//<img src="" alt="" class="img-thumbnail  col-3">
 };
 function showProductInfo(x) {
     let array = x;
@@ -92,8 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
             printComments(productComments);
         }
     });
-     //Identifica el elemento con un ID especifico para inyectarle codigo HTML mas la informacion que esta en el localstorage
-     document.getElementById("usuarioNavProductsInfo").innerHTML = `<a class="nav-link" href="" >${localStorage.getItem('usuario')}</a>`;
+    
 
     document.getElementById("productInfoCommentBtn").addEventListener("click", function (){
         

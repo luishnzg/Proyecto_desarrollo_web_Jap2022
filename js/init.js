@@ -6,19 +6,27 @@ const PRODUCT_INFO_COMMENTS_URL = "https://japceibal.github.io/emercado-api/prod
 const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
-let navBarList = ["usuarioNavIndex", "usuarioNavCategories"];
 
-function carIDbutton() {
-  for (let index = 0; index < navBarList.length; index++) {
-    let element = navBarList[index];
-    document.getElementById(element).innerHTML = `<a class="nav-link" href="" >${localStorage.getItem('usuario')}</a>`
-  }
- /* for (let id of navBarList) {
-  document.getElementById(id).innerHTML = `<a class="nav-link" href="" >${localStorage.getItem('usuario')}</a>`
+// se modifica el usuario para que sea un boton despegable mostrando diferentes opciones en las cuales te puede redireccionar
+// en "cerrar sesion" limpia todo el local storage y te redirige a la pagina de login
+document.getElementById("usuarioNav").innerHTML = `
     
-  }*/
-}
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown">
+      ${localStorage.getItem('usuario')}
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+        <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+        <li onclick="cerrarSesion()"><a class="dropdown-item" href="#" > Cerrar sesión</a></li>
+      </ul>
+    </li>
+`;
 
+function cerrarSesion() {
+  localStorage.clear();
+  window.location.href = "login.html"
+};
 
 let showSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "block";

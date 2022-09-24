@@ -55,8 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     )
-    //Identifica el elemento con un ID especifico para inyectarle codigo HTML mas la informacion que esta en el localstorage
-    document.getElementById("usuarioNavProducts").innerHTML = `<a class="nav-link" href="" >${localStorage.getItem('usuario')}</a>`;
+    
 
 
     document.getElementById("filtrarProductos").addEventListener("click", function () {
