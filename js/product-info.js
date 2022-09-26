@@ -4,24 +4,30 @@ let productComments = [];
 let newObj = {};
 
 function printImages(x) {
-    
+    let arrayActive = x;
     let htmlProducInfoContentAppendActive = "";
+    let htmlAppendSlideNumberActive = `<button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>`;
+    let htmlAppendSlideNumberNonActive = "";
+    htmlProducInfoContentAppendActive = 
+    `
+    <div class="carousel-item active" id="carouselActive">
+    <img src="${arrayActive.images[0]}" class="d-block w-100" alt="${arrayActive.description}"> 
+    </div> ` 
     let htmlProducInfoContentAppend = "";
-    for (let i = 0; i < x.images.length; i++) {
+    for (let i = 1; i < x.images.length; i++) {
         let array = x;
-        htmlProducInfoContentAppendActive = 
-        `
-        <div class="carousel-item active" id="carouselActive">
-        <img src="${array.images[0]}" class="d-block w-100" alt="${array.description}"> 
-        </div> ` 
         htmlProducInfoContentAppend += 
         `
         <div class="carousel-item" id="carouselNotActive">
         <img src="${array.images[i]}" class="d-block w-100" alt="${array.description}">
         </div>
         `;
-        
+        htmlAppendSlideNumberNonActive += `<button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="${array.images.length[i]}" aria-label="Slide ${array.images.length[i]}"></button>` 
     }
+    
+    
+    document.getElementById("indicators").innerHTML = htmlAppendSlideNumberActive + htmlAppendSlideNumberNonActive;
+
     document.getElementById("carouselPrint").innerHTML = htmlProducInfoContentAppendActive + htmlProducInfoContentAppend;
 
 };
