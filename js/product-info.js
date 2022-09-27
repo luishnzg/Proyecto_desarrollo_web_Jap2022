@@ -4,32 +4,30 @@ let productComments = [];
 let newObj = {};
 
 function printImages(x) {
-    let arrayActive = x;
-    let htmlProducInfoContentAppendActive = "";
-    let htmlAppendSlideNumberActive = `<button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>`;
-    let htmlAppendSlideNumberNonActive = "";
-    htmlProducInfoContentAppendActive = 
-    `
-    <div class="carousel-item active" id="carouselActive">
-    <img src="${arrayActive.images[0]}" class="d-block w-100" alt="${arrayActive.description}"> 
-    </div> ` 
-    let htmlProducInfoContentAppend = "";
-    for (let i = 1; i < x.images.length; i++) {
-        let array = x;
-        htmlProducInfoContentAppend += 
+    let appendCarousel = "";
+    for (let i = 0; i < x.images.length; i++) {
+        let img = x;
+       // appendCarousel += `<img src="${img.images[i]}">`;
+     if (img.images[i] == img.images[0]) {
+        appendCarousel += 
         `
-        <div class="carousel-item" id="carouselNotActive">
-        <img src="${array.images[i]}" class="d-block w-100" alt="${array.description}">
-        </div>
-        `;
-        htmlAppendSlideNumberNonActive += `<button type="button" data-bs-target="#carouselExampleControls" data-bs-slide-to="${array.images.length[i]}" aria-label="Slide ${array.images.length[i]}"></button>` 
+        <div class="carousel-item active">
+        <img src="${img.images[i]}" class="d-block w-100" alt="">
+      </div>
+      `
+     }   
+     else  {
+        appendCarousel += 
+        `
+        <div class="carousel-item">
+      <img src="${img.images[i]}" class="d-block w-100" alt="">
+    </div>
+        `
+
+     }
     }
     
-    
-    document.getElementById("indicators").innerHTML = htmlAppendSlideNumberActive + htmlAppendSlideNumberNonActive;
-
-    document.getElementById("carouselPrint").innerHTML = htmlProducInfoContentAppendActive + htmlProducInfoContentAppend;
-
+    document.getElementById("carousel2").innerHTML = appendCarousel;
 };
 function showProductInfo(x) {
     let array = x;
