@@ -53,17 +53,20 @@ function showProductInfo(x) {
     `;
     document.getElementById("containerProductInfo").innerHTML = htmlProducInfoContentAppend;
 };
+
+//funcion que me cambia el ID del producto
 function setRelatedProductID(id) {
     localStorage.setItem("productID", id);
    window.location.href = "product-info.html";
 }
+//Funcion que muestra los productos relacionados indicados en el producto
 function showRelatedProducts(x) {
 
     let htmlRelatedProductAppend ="";
     for (let i = 0; i < x.relatedProducts.length; i++) {
         let otherProduct = x.relatedProducts[i];
        htmlRelatedProductAppend += 
-        `<img src="${otherProduct.image}" class="img-thumbnail  col-3" alt="${otherProduct.name}" onclick="setRelatedProductID(${otherProduct.id})">`;
+        `<img src="${otherProduct.image}" class="img-thumbnail  col-3 " alt="${otherProduct.name}" onclick="setRelatedProductID(${otherProduct.id})">`;
         
     }
     document.getElementById("relatedProducts").innerHTML = htmlRelatedProductAppend;
@@ -75,10 +78,19 @@ function printComments(x) {
     let htmlProducInfoContentAppend = "";
 for (let i = 0; i < x.length; i++) {
     let array = x[i];
+    let estrellas = "";
+    for(let x = 0; x < 5; x++){
+        if(x < array.score){
+            estrellas += `<span class="fa fa-star checked"></span>`;
+        }else{
+            estrellas += `<span class="fa fa-star text-dark"></span>`;
+        }
+    }
+
     htmlProducInfoContentAppend += 
     `
     <div class="list-group-item list-group-item-action" id=${array.product}>  
-    <p><span style="font-weight:bold">${array.user}</span> - ${array.dateTime} - <span class="fa fa-star checked"> ${array.score} </span></p>
+    <p><span style="font-weight:bold">${array.user}</span> - ${array.dateTime} - <span> ${estrellas} </span></p>
     <p>${array.description} </p>
     </div>
 
