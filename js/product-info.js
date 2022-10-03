@@ -54,7 +54,7 @@ function showProductInfo(x) {
     document.getElementById("containerProductInfo").innerHTML = htmlProducInfoContentAppend;
 };
 
-//funcion que me cambia el ID del producto
+//funcion que me cambia el ID del producto y me redirige de nuevo a la pagina product-info
 function setRelatedProductID(id) {
     localStorage.setItem("productID", id);
    window.location.href = "product-info.html";
