@@ -7,6 +7,7 @@ const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 
+
 // se modifica el usuario para que sea un boton despegable mostrando diferentes opciones en las cuales te puede redireccionar
 // en "cerrar sesion" limpia todo el local storage y te redirige a la pagina de login
 document.getElementById("usuarioNav").innerHTML = `
@@ -25,7 +26,7 @@ document.getElementById("usuarioNav").innerHTML = `
 
 function cerrarSesion() {
   localStorage.clear();
-  window.location.href = "login.html"
+  window.location.href = "index.html";
 };
 
 let showSpinner = function(){

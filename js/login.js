@@ -8,7 +8,7 @@ if(email.value == "" || clave.value == "") {
     
 }
 else {
-    window.location.href = "index.html";
+    window.location.href = "portada.html";
     seteoLocalStorage();}
 
 }
@@ -16,4 +16,5 @@ else {
 // funcion creada para guardar en la memoria local la llave usuario y su valor. El valor es el dato que ingresamos en el elemento iput de tipo email con id email
 function seteoLocalStorage() {
     localStorage.setItem('usuario', email.value)
+    localStorage.setItem('usuarioJap', 25801)
 }

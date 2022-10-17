@@ -21,7 +21,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav w-100 justify-content-between">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
+            <a class="nav-link" href="portada.html">Inicio</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="categories.html">Categorías</a>
@@ -36,10 +36,89 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div class="container" id="cartInfo">
+      <div class="text-center p-4">
+        <h2>Carrito de compras</h2>
       </div>
+      <div class="row">
+        <div class="col-8">
+          <div id="cart" class="row row-cols-3">
+
+          </div>
+        </div>
+        <aside class="col-4">
+          <ul id="cartInfoItem" class="list-group">
+
+          </ul>
+          <hr>
+          <p class="text-right">Total: USD <span id="totalCarrito"></span></p>
+         <!-- <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>-->
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Ver compra
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title fw-bold" id="exampleModalLabel">¡Último paso!</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div>
+                    <h5>Tipo de Envio</h5>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Premium 2 a 5 días (15%)
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        Express 5 a 8 días (7%)
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3"
+                        checked>
+                      <label class="form-check-label" for="flexRadioDefault3">
+                        Standard 12 a 15 días (5%)
+                      </label>
+                    </div>
+                  </div>
+                  <br>
+                  <div>
+                    <h5>Direccion de envío</h5>
+                    <div class="">
+                      <label for="Calle" class="form-label mt-2">Calle</label>
+                      <input type="text" class="form-control" id="Calle" aria-describedby="Calle">
+                      <label for="Número" class="form-label mt-2">Número</label>
+                      <input type="text" class="form-control" id="Número" aria-describedby="Calle">
+                      <label for="Esquina" class="form-label mt-2">Esquina</label>
+                      <input type="text" class="form-control" id="Esquina" aria-describedby="Calle">
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-success" data-bs-dismiss="modal">Finalizar compra</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+
+
+      </div>
+
+
+    </div>
+    </div>
     </div>
   </main>
   <footer class="text-muted">
