@@ -13,10 +13,17 @@ function addProduct() {
     productToCart.count = 1;
     productToCart.unitCost = productInfo.cost;
     productToCart.currency = productInfo.currency;
-     // productToCart.image = productInfo.image[0];
-        if(localstorageList.indexOf(productToCart.id) === -1){
+    productToCart.image = productInfo.images[0];
+     //duplicateItem buscara si hay un objeto repetido en la lista de objetos del local storage
+     //esto lo hace iterando a traves de todos los IDs, si no encuentra algo igual retornara -1
+     //al retornar -1 podra incluir el objeto que no encontro en la lista
+     let duplicateItem = localstorageList.findIndex(object => {
+        return object.id === productToCart.id;
+    });
+        if(duplicateItem == -1){
             localstorageList.push(productToCart);
-        }
+            console.log(duplicateItem)
+        };
     localStorage.setItem("carrito", JSON.stringify(localstorageList))
 };
 
@@ -159,12 +166,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     })
 
-
+//Si no valor en la variable local storage list que trae los valores de una lista del ocal storage entonces hace
+//una lista vacia
     if (localstorageList == null) {
         localstorageList = [] 
     }
    
-   // localStorage.setItem("carrito", JSON.stringify(localstorageList))
-    console.log(localStorage.getItem("carrito"))
 })
 

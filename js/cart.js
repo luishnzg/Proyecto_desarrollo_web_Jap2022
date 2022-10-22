@@ -41,7 +41,7 @@ function showCartList(listaCarrito) {
     let appendtotalCarrito = "";
     for (let i = 0; i < listaCarrito.length; i++) {
         let item = listaCarrito[i];
-        let totalCarrito = listaCarrito[i];
+        
         appendListaCarrito +=
             `
         <div class="card" id="${item.id}">
@@ -63,9 +63,12 @@ function showCartList(listaCarrito) {
 
         </li>
         `
-        appendtotalCarrito = totalCarrito.count * totalCarrito.unitCost;
     }
-    
+    for (let i = 0; i < listaCarrito.length; i++) {
+        let totalCarrito = listaCarrito[i]
+        appendtotalCarrito = totalCarrito.count * totalCarrito.unitCost
+      console.log(typeof appendtotalCarrito)
+      }
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
     document.getElementById("totalCarrito").innerHTML = appendtotalCarrito;
