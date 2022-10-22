@@ -1,6 +1,7 @@
 let usuarioJapID = localStorage.getItem("usuarioJap");
 let cart_Array_Jap = {};
-let carritoDelLocalStorage = []; carritoDelLocalStorage = JSON.parse(localStorage.getItem("carrito"));
+let carritoDelLocalStorage = JSON.parse(localStorage.getItem("carrito"));
+
 
 
 function agregarItemCarrito(id) {
@@ -8,7 +9,7 @@ function agregarItemCarrito(id) {
         return object.id === id;
     });
     if (itemPlus !== -1) {
-        carritoDelLocalStorage[itemPlus].count = carritoDelLocalStorage[itemPlus].count + 1;
+        carritoDelLocalStorage[itemPlus].count += 1;
         localStorage.setItem("carrito", JSON.stringify(carritoDelLocalStorage));
         showCartList(carritoDelLocalStorage);
     }
@@ -16,15 +17,20 @@ function agregarItemCarrito(id) {
 }
 
 function eliminarItemCarrito(id) {
-    let itemPlus = carritoDelLocalStorage.findIndex(object => {
+    let itemMinus = carritoDelLocalStorage.findIndex(object => {
         return object.id === id;
     });
-    if (itemPlus !== -1) {
-        if (carritoDelLocalStorage[itemPlus].count !== 0){
-        carritoDelLocalStorage[itemPlus].count = carritoDelLocalStorage[itemPlus].count - 1;
-        localStorage.setItem("carrito", JSON.stringify(carritoDelLocalStorage));
-        showCartList(carritoDelLocalStorage);
-    }
+    if (itemMinus !== -1) {
+        if (carritoDelLocalStorage[itemMinus].count >= 2) {
+            carritoDelLocalStorage[itemMinus].count -= 1;
+            localStorage.setItem("carrito", JSON.stringify(carritoDelLocalStorage));
+            showCartList(carritoDelLocalStorage);
+        }
+        else {
+            carritoDelLocalStorage.splice(itemMinus, 1);
+            showCartList(carritoDelLocalStorage);
+           localStorage.setItem("carrito", JSON.stringify(carritoDelLocalStorage));
+        }
     }
 
 }
@@ -43,7 +49,7 @@ function showCartList(listaCarrito) {
                 <div class="card-body">
                     <h5 class="card-title">${item.name}</h5>
                     <p class="card-text">Costo: ${item.currency} ${item.unitCost}</p>
-                    <div class="">
+                    <div>
                     <button class="btn btn-primary"onclick="agregarItemCarrito(${item.id})" >+</button>
                     <button class="btn btn-danger float-end" onclick="eliminarItemCarrito(${item.id})" >-</button>
                     </div>
@@ -57,8 +63,9 @@ function showCartList(listaCarrito) {
 
         </li>
         `
-       appendtotalCarrito = totalCarrito.count * totalCarrito.unitCost;
+        appendtotalCarrito = totalCarrito.count * totalCarrito.unitCost;
     }
+    
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
     document.getElementById("totalCarrito").innerHTML = appendtotalCarrito;
@@ -68,18 +75,23 @@ function showCartList(listaCarrito) {
 document.addEventListener("DOMContentLoaded", function () {
     getJSONData(CART_INFO_URL + usuarioJapID + EXT_TYPE).then(function (resultObj) {
         if (resultObj.status === "ok") {
-            cart_Array_Jap = resultObj.data.articles;
-            localStorage.setItem("carrito", JSON.stringify(cart_Array_Jap));
-            carritoDelLocalStorage = JSON.parse(localStorage.getItem("carrito"));
-            localStorage.setItem("carrito", JSON.stringify(carritoDelLocalStorage));
+            cart_Array_Jap = resultObj.data.articles[0];
+//Se busca la lista que ya esta en el local storage para mostrar, si no hay una lista en localstorage,
+// se creara una lista y se le agregara el objeto que nos da el carrito por defecto
+//Luego se agregara esa lista al local storage
+           if (carritoDelLocalStorage == null){
+            carritoDelLocalStorage = [];
+            carritoDelLocalStorage.push(cart_Array_Jap);
+           }
+           localStorage.setItem("carrito", JSON.stringify(carritoDelLocalStorage));
             showCartList(carritoDelLocalStorage);
 
         }
     }
     );
-document.getElementById("boton-vaciar").addEventListener("click", function(){
-    carritoDelLocalStorage = [];
-    showCartList(carritoDelLocalStorage);
+    /*document.getElementById("boton-vaciar").addEventListener("click", function () {
+        carritoDelLocalStorage = [];
+        showCartList(carritoDelLocalStorage);
 
-})
+    })*/
 });
