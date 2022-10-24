@@ -3,7 +3,11 @@ let cart_Array_Jap = {};
 let carritoDelLocalStorage = JSON.parse(localStorage.getItem("carrito"));
 
 
-
+//agrega un item al carrito mediante el uso del metodo find index, este metidio me ubica el index del objeto en la lista
+// si no lo ubica me retorna -1. Aca se agrega una condicional en la que si el index del objeto No es igual a -1
+//le suma una unidad a la propiedad .count del objeto en la lista con el index que ha ubicado y actualiza la lista del
+//local storage. La forma que usamos para localizar el objeto que apuntamos en la lista de objetos es dandole a
+// a la funcion un parametro que sera el id del objeto
 function agregarItemCarrito(id) {
     let itemPlus = carritoDelLocalStorage.findIndex(object => {
         return object.id === id;
@@ -41,6 +45,7 @@ function showCartList(listaCarrito) {
     let appendtotalCarrito = "";
     for (let i = 0; i < listaCarrito.length; i++) {
         let item = listaCarrito[i];
+        let totalCarrito = listaCarrito[i];
         
         appendListaCarrito +=
             `
@@ -63,16 +68,13 @@ function showCartList(listaCarrito) {
 
         </li>
         `
-    }
-    for (let i = 0; i < listaCarrito.length; i++) {
-        let totalCarrito = listaCarrito[i]
+        
         if(totalCarrito.currency === "UYU")
         {
         appendtotalCarrito = Number(appendtotalCarrito) + (totalCarrito.count * (totalCarrito.unitCost / 40))}
         else {
             appendtotalCarrito = Number(appendtotalCarrito) + (totalCarrito.count * totalCarrito.unitCost)
         }
-      console.log(typeof appendtotalCarrito)
       }
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
