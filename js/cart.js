@@ -78,7 +78,7 @@ function showCartList(listaCarrito) {
       }
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
-    document.getElementById("totalCarrito").innerHTML = appendtotalCarrito;
+    document.getElementById("subTotalCarrito").innerHTML = 'USD ' + appendtotalCarrito;
 }
 
 
