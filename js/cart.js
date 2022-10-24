@@ -66,7 +66,12 @@ function showCartList(listaCarrito) {
     }
     for (let i = 0; i < listaCarrito.length; i++) {
         let totalCarrito = listaCarrito[i]
-        appendtotalCarrito = totalCarrito.count * totalCarrito.unitCost
+        if(totalCarrito.currency === "UYU")
+        {
+        appendtotalCarrito = Number(appendtotalCarrito) + (totalCarrito.count * (totalCarrito.unitCost / 40))}
+        else {
+            appendtotalCarrito = Number(appendtotalCarrito) + (totalCarrito.count * totalCarrito.unitCost)
+        }
       console.log(typeof appendtotalCarrito)
       }
     document.getElementById("cart").innerHTML = appendListaCarrito;
@@ -79,10 +84,10 @@ document.addEventListener("DOMContentLoaded", function () {
     getJSONData(CART_INFO_URL + usuarioJapID + EXT_TYPE).then(function (resultObj) {
         if (resultObj.status === "ok") {
             cart_Array_Jap = resultObj.data.articles[0];
-//Se busca la lista que ya esta en el local storage para mostrar, si no hay una lista en localstorage,
-// se creara una lista y se le agregara el objeto que nos da el carrito por defecto
+//Se busca la lista que ya esta en el local storage para mostrar, si no hay una lista en localstorage (siendo su resultado null),
+// o si hay una lista pero esta vacia, se creara una lista vacia y se le agregara el objeto que nos da el carrito por defecto
 //Luego se agregara esa lista al local storage
-           if (carritoDelLocalStorage == null){
+           if (carritoDelLocalStorage == null || carritoDelLocalStorage.length === 0){
             carritoDelLocalStorage = [];
             carritoDelLocalStorage.push(cart_Array_Jap);
            }
