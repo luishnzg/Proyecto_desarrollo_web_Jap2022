@@ -78,7 +78,16 @@ function showCartList(listaCarrito) {
       }
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
-    document.getElementById("subTotalCarrito").innerHTML = 'USD ' + appendtotalCarrito;
+    document.getElementById("subTotalCarrito").innerHTML = "USD " + appendtotalCarrito;
+    if (document.getElementById("flexRadioDefault3").checked === true) {
+        document.getElementById("costoEnvio").innerHTML = "USD " + appendtotalCarrito * 0.05
+    }
+    else if (document.getElementById("flexRadioDefault2").checked === true){
+        document.getElementById("costoEnvio").innerHTML = "USD " + appendtotalCarrito * 0.07
+    }
+    else { {
+        document.getElementById("costoEnvio").innerHTML = "USD " + appendtotalCarrito * 0.15
+    }}
 }
 
 
