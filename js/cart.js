@@ -78,16 +78,36 @@ function showCartList(listaCarrito) {
       }
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
-    document.getElementById("subTotalCarrito").innerHTML = "USD " + appendtotalCarrito;
+    document.getElementById("subTotalCarrito").innerHTML = "USD " + appendtotalCarrito.toFixed(2);
+
+
     if (document.getElementById("flexRadioDefault3").checked === true) {
-        document.getElementById("costoEnvio").innerHTML = "USD " + appendtotalCarrito * 0.05
+        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.05).toFixed(2);
+        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.05) + appendtotalCarrito).toFixed(2);
     }
-    else if (document.getElementById("flexRadioDefault2").checked === true){
-        document.getElementById("costoEnvio").innerHTML = "USD " + appendtotalCarrito * 0.07
-    }
-    else { {
-        document.getElementById("costoEnvio").innerHTML = "USD " + appendtotalCarrito * 0.15
-    }}
+    document.getElementById("flexRadioDefault3").addEventListener("click", function (){
+        document.getElementById("flexRadioDefault3").checked = true;
+        document.getElementById("flexRadioDefault2").checked = false;
+        document.getElementById("flexRadioDefault1").checked = false;
+        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.05).toFixed(2);
+        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.05) + appendtotalCarrito).toFixed(2);
+    })
+    document.getElementById("flexRadioDefault2").addEventListener("click", function (){
+        document.getElementById("flexRadioDefault2").checked = true;
+        document.getElementById("flexRadioDefault3").checked = false;
+        document.getElementById("flexRadioDefault1").checked = false;
+        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.07).toFixed(2);
+        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.07) + appendtotalCarrito).toFixed(2);
+
+    })
+    document.getElementById("flexRadioDefault1").addEventListener("click", function (){
+        document.getElementById("flexRadioDefault1").checked = true;
+        document.getElementById("flexRadioDefault3").checked = false;
+        document.getElementById("flexRadioDefault2").checked = false;
+        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.15).toFixed(2);
+        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.15) + appendtotalCarrito).toFixed(2);
+    })
+    
 }
 
 
