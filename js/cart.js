@@ -1,6 +1,70 @@
 let usuarioJapID = localStorage.getItem("usuarioJap");
 let cart_Array_Jap = {};
 let carritoDelLocalStorage = JSON.parse(localStorage.getItem("carrito"));
+let validacionCarrito = document.querySelectorAll('.needs-validation');
+let inputsvalidation = document.querySelectorAll("input");
+document.getElementById("tCredito").addEventListener("click", function () {
+    document.getElementById("tBancariaInfo").classList.add("d-none");
+    document.getElementById("nCuenta").required = false;
+    document.getElementById("tCreditoInfo").classList.remove("d-none");
+})
+document.getElementById("tBancaria").addEventListener("click", function () {
+    document.getElementById("tCreditoInfo").classList.add("d-none");
+    document.getElementById("tBancariaInfo").classList.remove("d-none");
+})
+
+/*inputsvalidation.addEventListener("change", function () {
+    estadoValidacionesPago();
+    estadoValidacionesEnvio();
+    
+  })*/
+
+function estadoValidacionesEnvio() {
+
+    if (document.getElementById("Calle").checked && document.getElementById("Numero").checked && document.getElementById("Esquina").checked) {
+        document.getElementById("botonDetallesEntrega").classList.remove("is-invalid");
+        document.getElementById("botonDetallesEntrega").classList.remove("text-danger");
+    } else {
+        document.getElementById("botonDetallesEntrega").classList.add("is-invalid");
+        document.getElementById("botonDetallesEntrega").classList.add("text-danger");
+    }
+
+};
+
+function estadoValidacionesPago() {
+
+    if ((document.getElementById("tCredito").checked || document.getElementById("tBancaria").checked) &&
+        document.getElementById("Calle").checked && document.getElementById("Numero").checked &&
+        document.getElementById("Esquina").checked) {
+        document.getElementById("tCredito").classList.add("is-valid");
+        document.getElementById("tCredito").classList.remove("is-invalid");
+        document.getElementById("tBancaria").classList.add("is-valid");
+        document.getElementById("tBancaria").classList.remove("is-invalid");
+        document.getElementById("botonFormaPago").classList.remove("is-invalid");
+        document.getElementById("botonFormaPago").classList.remove("text-danger");
+    } else {
+        document.getElementById("tCredito").classList.add("is-invalid");
+        document.getElementById("tCredito").classList.remove("is-valid");
+        document.getElementById("tBancaria").classList.add("is-invalid");
+        document.getElementById("tBancaria").classList.remove("is-valid");
+        document.getElementById("botonFormaPago").classList.add("is-invalid");
+        document.getElementById("botonFormaPago").classList.add("text-danger");
+    }
+
+};
+
+Array.prototype.slice.call(validacionCarrito)
+    .forEach(function (validacionCarrito) {
+        validacionCarrito.addEventListener('submit', function (event) {
+            if (!estadoValidacionesPago() || !validacionCarrito.checkValidity() || !estadoValidacionesEnvio()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            validacionCarrito.classList.add('was-validated')
+        }, false)
+    })
+
 
 
 //agrega un item al carrito mediante el uso del metodo find index, este metidio me ubica el index del objeto en la lista
@@ -33,7 +97,7 @@ function eliminarItemCarrito(id) {
         else {
             carritoDelLocalStorage.splice(itemMinus, 1);
             showCartList(carritoDelLocalStorage);
-           localStorage.setItem("carrito", JSON.stringify(carritoDelLocalStorage));
+            localStorage.setItem("carrito", JSON.stringify(carritoDelLocalStorage));
         }
     }
 
@@ -46,7 +110,7 @@ function showCartList(listaCarrito) {
     for (let i = 0; i < listaCarrito.length; i++) {
         let item = listaCarrito[i];
         let totalCarrito = listaCarrito[i];
-        
+
         appendListaCarrito +=
             `
         <div class="card" id="${item.id}">
@@ -64,50 +128,48 @@ function showCartList(listaCarrito) {
         `;
         appendListaCarritoItem +=
             `
-        <li class="list-group-item text-right"> ${item.count} x ${item.name} = ${item.currency} ${item.count * item.unitCost} 
-
+        <li class="list-group-item"> ${item.count} x ${item.name} = ${item.currency} ${item.count * item.unitCost} 
+        <button type="button" class="btn-close float-end"  aria-label="Close"></button>
         </li>
-        `
         
-        if(totalCarrito.currency === "UYU")
-        {
-        appendtotalCarrito = Number(appendtotalCarrito) + (totalCarrito.count * (totalCarrito.unitCost / 40))}
+        `
+
+        if (totalCarrito.currency === "UYU") {
+            appendtotalCarrito = Number(appendtotalCarrito) + (totalCarrito.count * (totalCarrito.unitCost / 40))
+        }
         else {
             appendtotalCarrito = Number(appendtotalCarrito) + (totalCarrito.count * totalCarrito.unitCost)
         }
-      }
+    }
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
-    document.getElementById("subTotalCarrito").innerHTML = "USD " + appendtotalCarrito.toFixed(2);
+    document.getElementById("subTotalCarrito").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito);
 
 
-    if (document.getElementById("flexRadioDefault3").checked === true) {
-        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.05).toFixed(2);
-        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.05) + appendtotalCarrito).toFixed(2);
+    if (document.getElementById("entregaPremium").checked === true) {
+        document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05)
+        document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.05) + appendtotalCarrito);
     }
-    document.getElementById("flexRadioDefault3").addEventListener("click", function (){
-        document.getElementById("flexRadioDefault3").checked = true;
-        document.getElementById("flexRadioDefault2").checked = false;
-        document.getElementById("flexRadioDefault1").checked = false;
-        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.05).toFixed(2);
-        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.05) + appendtotalCarrito).toFixed(2);
+    document.getElementById("entregaPremium").addEventListener("click", function () {
+        if (document.getElementById("entregaPremium").checked = true) {
+            document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05);
+            document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.05) + appendtotalCarrito);
+        }
     })
-    document.getElementById("flexRadioDefault2").addEventListener("click", function (){
-        document.getElementById("flexRadioDefault2").checked = true;
-        document.getElementById("flexRadioDefault3").checked = false;
-        document.getElementById("flexRadioDefault1").checked = false;
-        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.07).toFixed(2);
-        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.07) + appendtotalCarrito).toFixed(2);
+    document.getElementById("entregaExpress").addEventListener("click", function () {
+        if (document.getElementById("entregaExpress").checked = true) {
+            document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.07);
+            document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.07) + appendtotalCarrito);
 
+        }
     })
-    document.getElementById("flexRadioDefault1").addEventListener("click", function (){
-        document.getElementById("flexRadioDefault1").checked = true;
-        document.getElementById("flexRadioDefault3").checked = false;
-        document.getElementById("flexRadioDefault2").checked = false;
-        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.15).toFixed(2);
-        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.15) + appendtotalCarrito).toFixed(2);
+    document.getElementById("entregaStandard").addEventListener("click", function () {
+        if (document.getElementById("entregaStandard").checked = true) {
+            document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.15);
+            document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.15) + appendtotalCarrito);
+        }
     })
-    
+
 }
 
 
@@ -115,14 +177,14 @@ document.addEventListener("DOMContentLoaded", function () {
     getJSONData(CART_INFO_URL + usuarioJapID + EXT_TYPE).then(function (resultObj) {
         if (resultObj.status === "ok") {
             cart_Array_Jap = resultObj.data.articles[0];
-//Se busca la lista que ya esta en el local storage para mostrar, si no hay una lista en localstorage (siendo su resultado null),
-// o si hay una lista pero esta vacia, se creara una lista vacia y se le agregara el objeto que nos da el carrito por defecto
-//Luego se agregara esa lista al local storage
-           if (carritoDelLocalStorage == null || carritoDelLocalStorage.length === 0){
-            carritoDelLocalStorage = [];
-            carritoDelLocalStorage.push(cart_Array_Jap);
-           }
-           localStorage.setItem("carrito", JSON.stringify(carritoDelLocalStorage));
+            //Se busca la lista que ya esta en el local storage para mostrar, si no hay una lista en localstorage (siendo su resultado null),
+            // o si hay una lista pero esta vacia, se creara una lista vacia y se le agregara el objeto que nos da el carrito por defecto
+            //Luego se agregara esa lista al local storage
+            if (carritoDelLocalStorage == null || carritoDelLocalStorage.length === 0) {
+                carritoDelLocalStorage = [];
+                carritoDelLocalStorage.push(cart_Array_Jap);
+            }
+            localStorage.setItem("carrito", JSON.stringify(carritoDelLocalStorage));
             showCartList(carritoDelLocalStorage);
 
         }
