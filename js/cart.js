@@ -5,12 +5,24 @@ let validacionCarrito = document.querySelectorAll('.needs-validation');
 let inputsvalidation = document.querySelectorAll("input");
 document.getElementById("tCredito").addEventListener("click", function () {
     document.getElementById("tBancariaInfo").classList.add("d-none");
-    document.getElementById("nCuenta").required = false;
     document.getElementById("tCreditoInfo").classList.remove("d-none");
+    document.getElementById("nCuenta").required = false;
+    document.getElementById("tBancaria").required = false;
+    document.getElementById("tCredito").required = true;
+    document.getElementById("nTarjeta").required = true;
+    document.getElementById("codigoSeguridad").required = true;
+    document.getElementById("vencimiento").required = true;
+    
 })
 document.getElementById("tBancaria").addEventListener("click", function () {
     document.getElementById("tCreditoInfo").classList.add("d-none");
     document.getElementById("tBancariaInfo").classList.remove("d-none");
+    document.getElementById("nCuenta").required = true;
+    document.getElementById("tBancaria").required = true;
+    document.getElementById("tCredito").required = false;
+    document.getElementById("nTarjeta").required = false;
+    document.getElementById("codigoSeguridad").required = false;
+    document.getElementById("vencimiento").required = false;
 })
 
 /*inputsvalidation.addEventListener("change", function () {
@@ -60,8 +72,8 @@ Array.prototype.slice.call(validacionCarrito)
                 event.preventDefault()
                 event.stopPropagation()
             }
-
-            validacionCarrito.classList.add('was-validated')
+else {
+            validacionCarrito.classList.add('was-validated')}
         }, false)
     })
 
@@ -144,16 +156,15 @@ function showCartList(listaCarrito) {
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
     document.getElementById("subTotalCarrito").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito);
-
-
-    if (document.getElementById("entregaPremium").checked === true) {
-        document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05)
+    if (document.getElementById("entregaStandard").checked = true) {
+        document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05);
         document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.05) + appendtotalCarrito);
     }
+
     document.getElementById("entregaPremium").addEventListener("click", function () {
         if (document.getElementById("entregaPremium").checked = true) {
-            document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05);
-            document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.05) + appendtotalCarrito);
+            document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.15);
+            document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.15) + appendtotalCarrito);
         }
     })
     document.getElementById("entregaExpress").addEventListener("click", function () {
@@ -165,8 +176,8 @@ function showCartList(listaCarrito) {
     })
     document.getElementById("entregaStandard").addEventListener("click", function () {
         if (document.getElementById("entregaStandard").checked = true) {
-            document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.15);
-            document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.15) + appendtotalCarrito);
+            document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05);
+            document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.05) + appendtotalCarrito);
         }
     })
 
