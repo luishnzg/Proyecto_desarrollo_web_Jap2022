@@ -2,8 +2,8 @@ let usuarioJapID = localStorage.getItem("usuarioJap");
 let cart_Array_Jap = {};
 let carritoDelLocalStorage = JSON.parse(localStorage.getItem("carrito"));
 let validacionCarrito = document.querySelectorAll('.needs-validation');
-let inputsvalidation = document.querySelectorAll("input");
-document.getElementById("tCredito").addEventListener("click", function () {
+
+/*document.getElementById("tCredito").addEventListener("click", function () {
     document.getElementById("tBancariaInfo").classList.add("d-none");
     document.getElementById("tCreditoInfo").classList.remove("d-none");
     document.getElementById("nCuenta").required = false;
@@ -23,7 +23,7 @@ document.getElementById("tBancaria").addEventListener("click", function () {
     document.getElementById("nTarjeta").required = false;
     document.getElementById("codigoSeguridad").required = false;
     document.getElementById("vencimiento").required = false;
-})
+})*/
 
 /*inputsvalidation.addEventListener("change", function () {
     estadoValidacionesPago();
@@ -31,7 +31,7 @@ document.getElementById("tBancaria").addEventListener("click", function () {
     
   })*/
 
-function estadoValidacionesEnvio() {
+/*function estadoValidacionesEnvio() {
 
     if (document.getElementById("Calle").checked && document.getElementById("Numero").checked && document.getElementById("Esquina").checked) {
         document.getElementById("botonDetallesEntrega").classList.remove("is-invalid");
@@ -41,13 +41,17 @@ function estadoValidacionesEnvio() {
         document.getElementById("botonDetallesEntrega").classList.add("text-danger");
     }
 
-};
+};*/
 
+document.getElementById("tCredito").addEventListener("change", function () {
+    estadoValidacionesPago();
+})
+document.getElementById("tBancaria").addEventListener("change", function () {
+    estadoValidacionesPago();
+})
 function estadoValidacionesPago() {
 
-    if ((document.getElementById("tCredito").checked || document.getElementById("tBancaria").checked) &&
-        document.getElementById("Calle").checked && document.getElementById("Numero").checked &&
-        document.getElementById("Esquina").checked) {
+    if ((document.getElementById("tCredito").checked || document.getElementById("tBancaria").checked)) {
         document.getElementById("tCredito").classList.add("is-valid");
         document.getElementById("tCredito").classList.remove("is-invalid");
         document.getElementById("tBancaria").classList.add("is-valid");
@@ -66,14 +70,15 @@ function estadoValidacionesPago() {
 };
 
 Array.prototype.slice.call(validacionCarrito)
-    .forEach(function (validacionCarrito) {
-        validacionCarrito.addEventListener('submit', function (event) {
-            if (!estadoValidacionesPago() || !validacionCarrito.checkValidity() || !estadoValidacionesEnvio()) {
+    .forEach(function (validacionC) {
+        validacionC.addEventListener('submit', function (event) {
+            if (!estadoValidacionesPago() || !validacionC.checkValidity()) {
                 event.preventDefault()
                 event.stopPropagation()
             }
-else {
-            validacionCarrito.classList.add('was-validated')}
+            else {
+                validacionCarrito.classList.add('was-validated')
+            }
         }, false)
     })
 
@@ -156,10 +161,10 @@ function showCartList(listaCarrito) {
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
     document.getElementById("subTotalCarrito").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito);
-    if (document.getElementById("entregaStandard").checked = true) {
+   /* if (document.getElementById("entregaStandard").checked = true) {
         document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05);
         document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.05) + appendtotalCarrito);
-    }
+    }*/
 
     document.getElementById("entregaPremium").addEventListener("click", function () {
         if (document.getElementById("entregaPremium").checked = true) {
