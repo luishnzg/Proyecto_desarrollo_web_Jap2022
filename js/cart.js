@@ -3,27 +3,27 @@ let cart_Array_Jap = {};
 let carritoDelLocalStorage = JSON.parse(localStorage.getItem("carrito"));
 let validacionCarrito = document.querySelectorAll('.needs-validation');
 
-/*document.getElementById("tCredito").addEventListener("click", function () {
+document.getElementById("tCredito").addEventListener("click", function () {
     document.getElementById("tBancariaInfo").classList.add("d-none");
     document.getElementById("tCreditoInfo").classList.remove("d-none");
-    document.getElementById("nCuenta").required = false;
-    document.getElementById("tBancaria").required = false;
-    document.getElementById("tCredito").required = true;
-    document.getElementById("nTarjeta").required = true;
-    document.getElementById("codigoSeguridad").required = true;
-    document.getElementById("vencimiento").required = true;
-    
+    /* document.getElementById("nCuenta").required = false;
+     document.getElementById("tBancaria").required = false;
+     document.getElementById("tCredito").required = true;
+     document.getElementById("nTarjeta").required = true;
+     document.getElementById("codigoSeguridad").required = true;
+     document.getElementById("vencimiento").required = true;*/
+
 })
 document.getElementById("tBancaria").addEventListener("click", function () {
     document.getElementById("tCreditoInfo").classList.add("d-none");
     document.getElementById("tBancariaInfo").classList.remove("d-none");
-    document.getElementById("nCuenta").required = true;
-    document.getElementById("tBancaria").required = true;
-    document.getElementById("tCredito").required = false;
-    document.getElementById("nTarjeta").required = false;
-    document.getElementById("codigoSeguridad").required = false;
-    document.getElementById("vencimiento").required = false;
-})*/
+    /* document.getElementById("nCuenta").required = true;
+     document.getElementById("tBancaria").required = true;
+     document.getElementById("tCredito").required = false;
+     document.getElementById("nTarjeta").required = false;
+     document.getElementById("codigoSeguridad").required = false;
+     document.getElementById("vencimiento").required = false;*/
+})
 
 /*inputsvalidation.addEventListener("change", function () {
     estadoValidacionesPago();
@@ -50,21 +50,31 @@ document.getElementById("tBancaria").addEventListener("change", function () {
     estadoValidacionesPago();
 })
 function estadoValidacionesPago() {
+    if (!document.getElementById("tCredito").checked && !document.getElementById("tBancaria").checked) {
+       /* document.getElementById("opcionesPago").classList.add("is-invalid");
+        document.getElementById("botonFormaPago").classList.add("is-invalid");
+        document.getElementById("botonFormaPago").classList.add("text-danger")*/
+    }
 
-    if ((document.getElementById("tCredito").checked || document.getElementById("tBancaria").checked)) {
+    if (document.getElementById("tCredito").checked && !document.getElementById("tBancaria").checked) {
+        document.getElementById("opcionesPago").classList.remove("is-invalid")
         document.getElementById("tCredito").classList.add("is-valid");
         document.getElementById("tCredito").classList.remove("is-invalid");
-        document.getElementById("tBancaria").classList.add("is-valid");
+        document.getElementById("tBancaria").classList.remove("is-valid");
         document.getElementById("tBancaria").classList.remove("is-invalid");
         document.getElementById("botonFormaPago").classList.remove("is-invalid");
         document.getElementById("botonFormaPago").classList.remove("text-danger");
-    } else {
-        document.getElementById("tCredito").classList.add("is-invalid");
-        document.getElementById("tCredito").classList.remove("is-valid");
-        document.getElementById("tBancaria").classList.add("is-invalid");
-        document.getElementById("tBancaria").classList.remove("is-valid");
-        document.getElementById("botonFormaPago").classList.add("is-invalid");
-        document.getElementById("botonFormaPago").classList.add("text-danger");
+    }
+    else if (document.getElementById("tBancaria").checked) {
+
+    }
+    else {
+         document.getElementById("tCredito").classList.add("is-invalid");
+         document.getElementById("tCredito").classList.remove("is-valid");
+         document.getElementById("tBancaria").classList.add("is-invalid");
+         document.getElementById("tBancaria").classList.remove("is-valid");
+         document.getElementById("botonFormaPago").classList.add("is-invalid");
+         document.getElementById("botonFormaPago").classList.add("text-danger");
     }
 
 };
@@ -72,16 +82,17 @@ function estadoValidacionesPago() {
 Array.prototype.slice.call(validacionCarrito)
     .forEach(function (validacionC) {
         validacionC.addEventListener('submit', function (event) {
-            if (!estadoValidacionesPago() || !validacionC.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
+            if ( !estadoValidacionesPago() ||!validacionC.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                console.log(validacionC.checkValidity())
             }
-            else {
-                validacionCarrito.classList.add('was-validated')
-            }
-        }, false)
-    })
 
+            validacionC.classList.add('was-validated')
+
+        }, false)
+    });
+;
 
 
 //agrega un item al carrito mediante el uso del metodo find index, este metidio me ubica el index del objeto en la lista
@@ -161,10 +172,10 @@ function showCartList(listaCarrito) {
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
     document.getElementById("subTotalCarrito").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito);
-   /* if (document.getElementById("entregaStandard").checked = true) {
+    if (document.getElementById("entregaStandard").checked = true) {
         document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05);
         document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.05) + appendtotalCarrito);
-    }*/
+    }
 
     document.getElementById("entregaPremium").addEventListener("click", function () {
         if (document.getElementById("entregaPremium").checked = true) {
