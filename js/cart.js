@@ -2,28 +2,51 @@ let usuarioJapID = localStorage.getItem("usuarioJap");
 let cart_Array_Jap = {};
 let carritoDelLocalStorage = JSON.parse(localStorage.getItem("carrito"));
 let validacionCarrito = document.querySelectorAll('.needs-validation');
-
-document.getElementById("tCredito").addEventListener("click", function () {
+let tarjetaCredito = document.getElementById("tCredito");
+let numeroTarjeta = document.getElementById("nTarjeta");
+let codigoSeguridad = document.getElementById("codigoSeguridad");
+let vencimientoTarjeta = document.getElementById("vencimiento");
+let transferenciaBancaria = document.getElementById("tBancaria");
+let numeroCuenta = document.getElementById("nCuenta");
+let botonFormaPago = document.getElementById("botonFormaPago");
+let opcionesPago = document.getElementById("opcionesPago");
+/*document.getElementById("tCredito").addEventListener("click", function () {
     document.getElementById("tBancariaInfo").classList.add("d-none");
     document.getElementById("tCreditoInfo").classList.remove("d-none");
+    numeroCuenta.setAttribute("disabled", "");
+    numeroTarjeta.removeAttribute("disable");
+    codigoSeguridad.removeAttribute("disable");
+    vencimientoTarjeta.removeAttribute("disable");
+    transferenciaBancaria.removeAttribute("required");
+     transferenciaBancaria.checked = false;
+     console.log(transferenciaBancaria.checked)
+     console.log(transferenciaBancaria.checkValidity());
+     console.log(numeroCuenta.checkValidity())*/
+    // document.getElementById("tBancaria").removeAttribute("required")
     /* document.getElementById("nCuenta").required = false;
      document.getElementById("tBancaria").required = false;
      document.getElementById("tCredito").required = true;
      document.getElementById("nTarjeta").required = true;
      document.getElementById("codigoSeguridad").required = true;
-     document.getElementById("vencimiento").required = true;*/
+     document.getElementById("vencimiento").required = true;
 
-})
-document.getElementById("tBancaria").addEventListener("click", function () {
+})*/
+/*document.getElementById("tBancaria").addEventListener("click", function () {
     document.getElementById("tCreditoInfo").classList.add("d-none");
     document.getElementById("tBancariaInfo").classList.remove("d-none");
-    /* document.getElementById("nCuenta").required = true;
+    numeroCuenta.getAttribute("disable");
+    numeroCuenta.removeAttribute("disable");
+    numeroTarjeta.setAttribute("disable", "");
+    codigoSeguridad.setAttribute("disable", "");
+    vencimientoTarjeta.setAttribute("disable", "");
+
+    document.getElementById("nCuenta").required = true;
      document.getElementById("tBancaria").required = true;
      document.getElementById("tCredito").required = false;
      document.getElementById("nTarjeta").required = false;
      document.getElementById("codigoSeguridad").required = false;
-     document.getElementById("vencimiento").required = false;*/
-})
+     document.getElementById("vencimiento").required = false;
+})*/
 
 /*inputsvalidation.addEventListener("change", function () {
     estadoValidacionesPago();
@@ -48,41 +71,69 @@ document.getElementById("tCredito").addEventListener("change", function () {
 })
 document.getElementById("tBancaria").addEventListener("change", function () {
     estadoValidacionesPago();
+    
 })
 function estadoValidacionesPago() {
-    if (!document.getElementById("tCredito").checked && !document.getElementById("tBancaria").checked) {
-       /* document.getElementById("opcionesPago").classList.add("is-invalid");
-        document.getElementById("botonFormaPago").classList.add("is-invalid");
-        document.getElementById("botonFormaPago").classList.add("text-danger")*/
+
+    if (!tarjetaCredito.checked && !transferenciaBancaria.checked) {
+        opcionesPago.classList.add("is-invalid");
+        botonFormaPago.classList.add("is-invalid");
+        botonFormaPago.classList.add("text-danger")
     }
 
-    if (document.getElementById("tCredito").checked && !document.getElementById("tBancaria").checked) {
-        document.getElementById("opcionesPago").classList.remove("is-invalid")
-        document.getElementById("tCredito").classList.add("is-valid");
-        document.getElementById("tCredito").classList.remove("is-invalid");
-        document.getElementById("tBancaria").classList.remove("is-valid");
-        document.getElementById("tBancaria").classList.remove("is-invalid");
-        document.getElementById("botonFormaPago").classList.remove("is-invalid");
-        document.getElementById("botonFormaPago").classList.remove("text-danger");
+    else if (tarjetaCredito.checked && !transferenciaBancaria.checked) {
+       /* document.getElementById("tBancariaInfo").classList.add("d-none");
+        document.getElementById("tCreditoInfo").classList.remove("d-none");*/
+        transferenciaBancaria.checked = false;
+        numeroCuenta.setAttribute("disabled", "");
+        numeroTarjeta.removeAttribute("disabled");
+        codigoSeguridad.removeAttribute("disabled");
+        vencimientoTarjeta.removeAttribute("disabled");
+        if (numeroTarjeta.checkValidity() && codigoSeguridad.checkValidity() && vencimientoTarjeta.checkValidity()) {
+            botonFormaPago.classList.remove("is-invalid");
+            botonFormaPago.classList.remove("text-danger");
+            botonFormaPago.classList.add("is-valid");
+            opcionesPago.classList.remove("is-invalid");
+
+        }
+        else {
+            botonFormaPago.classList.add("is-invalid");
+            botonFormaPago.classList.add("text-danger")
+            opcionesPago.classList.remove("is-invalid");
+        }
     }
-    else if (document.getElementById("tBancaria").checked) {
+    
+ else if (transferenciaBancaria.checked && !tarjetaCredito.checked ) {
+    /*document.getElementById("tCreditoInfo").classList.add("d-none");
+    document.getElementById("tBancariaInfo").classList.remove("d-none");*/
+    tarjetaCredito.checked = false;
+    numeroCuenta.getAttribute("disabled");
+    numeroCuenta.removeAttribute("disabled");
+    //numeroCuenta.setAttribute("disabled", "");
+    numeroTarjeta.setAttribute("disabled", "");
+    codigoSeguridad.setAttribute("disabled", "");
+    vencimientoTarjeta.setAttribute("disabled", "");
+    if (!numeroCuenta.checkValidity()){
+        botonFormaPago.classList.add("is-invalid");
+        botonFormaPago.classList.add("text-danger")
+        opcionesPago.classList.remove("is-invalid");
 
     }
     else {
-         document.getElementById("tCredito").classList.add("is-invalid");
-         document.getElementById("tCredito").classList.remove("is-valid");
-         document.getElementById("tBancaria").classList.add("is-invalid");
-         document.getElementById("tBancaria").classList.remove("is-valid");
-         document.getElementById("botonFormaPago").classList.add("is-invalid");
-         document.getElementById("botonFormaPago").classList.add("text-danger");
+        botonFormaPago.classList.remove("is-invalid");
+        botonFormaPago.classList.remove("text-danger");
+        botonFormaPago.classList.add("is-valid");
+        opcionesPago.classList.remove("is-invalid");
     }
+ }
+ 
 
 };
 
 Array.prototype.slice.call(validacionCarrito)
     .forEach(function (validacionC) {
         validacionC.addEventListener('submit', function (event) {
-            if ( !estadoValidacionesPago() ||!validacionC.checkValidity()) {
+            if (!estadoValidacionesPago() || !validacionC.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();
                 console.log(validacionC.checkValidity())
