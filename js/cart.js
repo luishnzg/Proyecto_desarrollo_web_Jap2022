@@ -10,80 +10,47 @@ let transferenciaBancaria = document.getElementById("tBancaria");
 let numeroCuenta = document.getElementById("nCuenta");
 let botonFormaPago = document.getElementById("botonFormaPago");
 let opcionesPago = document.getElementById("opcionesPago");
-/*document.getElementById("tCredito").addEventListener("click", function () {
-    document.getElementById("tBancariaInfo").classList.add("d-none");
-    document.getElementById("tCreditoInfo").classList.remove("d-none");
-    numeroCuenta.setAttribute("disabled", "");
-    numeroTarjeta.removeAttribute("disable");
-    codigoSeguridad.removeAttribute("disable");
-    vencimientoTarjeta.removeAttribute("disable");
-    transferenciaBancaria.removeAttribute("required");
-     transferenciaBancaria.checked = false;
-     console.log(transferenciaBancaria.checked)
-     console.log(transferenciaBancaria.checkValidity());
-     console.log(numeroCuenta.checkValidity())*/
-    // document.getElementById("tBancaria").removeAttribute("required")
-    /* document.getElementById("nCuenta").required = false;
-     document.getElementById("tBancaria").required = false;
-     document.getElementById("tCredito").required = true;
-     document.getElementById("nTarjeta").required = true;
-     document.getElementById("codigoSeguridad").required = true;
-     document.getElementById("vencimiento").required = true;
+let direccionCalle = document.getElementById("Calle");
+let direccionNumero = document.getElementById("Esquina");
+let direccionEsquina = document.getElementById("Numero");
+let botonDetallesEntrega = document.getElementById("botonDetallesEntrega");
 
-})*/
-/*document.getElementById("tBancaria").addEventListener("click", function () {
-    document.getElementById("tCreditoInfo").classList.add("d-none");
-    document.getElementById("tBancariaInfo").classList.remove("d-none");
-    numeroCuenta.getAttribute("disable");
-    numeroCuenta.removeAttribute("disable");
-    numeroTarjeta.setAttribute("disable", "");
-    codigoSeguridad.setAttribute("disable", "");
-    vencimientoTarjeta.setAttribute("disable", "");
-
-    document.getElementById("nCuenta").required = true;
-     document.getElementById("tBancaria").required = true;
-     document.getElementById("tCredito").required = false;
-     document.getElementById("nTarjeta").required = false;
-     document.getElementById("codigoSeguridad").required = false;
-     document.getElementById("vencimiento").required = false;
-})*/
-
-/*inputsvalidation.addEventListener("change", function () {
-    estadoValidacionesPago();
-    estadoValidacionesEnvio();
-    
-  })*/
-
-/*function estadoValidacionesEnvio() {
-
-    if (document.getElementById("Calle").checked && document.getElementById("Numero").checked && document.getElementById("Esquina").checked) {
-        document.getElementById("botonDetallesEntrega").classList.remove("is-invalid");
-        document.getElementById("botonDetallesEntrega").classList.remove("text-danger");
-    } else {
-        document.getElementById("botonDetallesEntrega").classList.add("is-invalid");
-        document.getElementById("botonDetallesEntrega").classList.add("text-danger");
+//Se crea esta iteracion para que cambie en tiempo real el aviso en los links de forma de pago y direccion de envio
+//de que falta que se complete un campo
+for (const input of validacionCarrito) {
+    input.addEventListener("input", function () {
+        estadoValidacionesPago();
+        estadoValidacionesDetallesEntrega();
+    })
+}
+//se creat esta funcion para agregar las validaciones al link de informacion de envio
+function estadoValidacionesDetallesEntrega() {
+    let validacionEnvio = false
+    if (!direccionCalle.checkValidity() || !direccionNumero.checkValidity() || !direccionEsquina.checkValidity()) {
+        botonDetallesEntrega.classList.add("is-invalid");
+        botonDetallesEntrega.classList.add("text-danger")
+        botonDetallesEntrega.classList.remove("is-valid")
     }
+    else {
+        botonDetallesEntrega.classList.remove("is-invalid");
+        botonDetallesEntrega.classList.remove("text-danger")
+        botonDetallesEntrega.classList.add("is-valid")
+        validacionEnvio = true
+    }
+    return validacionEnvio
+}
 
-};*/
-
-document.getElementById("tCredito").addEventListener("change", function () {
-    estadoValidacionesPago();
-})
-document.getElementById("tBancaria").addEventListener("change", function () {
-    estadoValidacionesPago();
-    
-})
+//Se crea esta funcion para agregar las validaciones al link de formas de pago y 
+//desabilitar los campos que no seran usados en la forma de pago no seleccionada
 function estadoValidacionesPago() {
-
     if (!tarjetaCredito.checked && !transferenciaBancaria.checked) {
         opcionesPago.classList.add("is-invalid");
         botonFormaPago.classList.add("is-invalid");
         botonFormaPago.classList.add("text-danger")
     }
-
     else if (tarjetaCredito.checked && !transferenciaBancaria.checked) {
-       /* document.getElementById("tBancariaInfo").classList.add("d-none");
-        document.getElementById("tCreditoInfo").classList.remove("d-none");*/
+        /* document.getElementById("tBancariaInfo").classList.add("d-none");
+         document.getElementById("tCreditoInfo").classList.remove("d-none");*/
         transferenciaBancaria.checked = false;
         numeroCuenta.setAttribute("disabled", "");
         numeroTarjeta.removeAttribute("disabled");
@@ -94,46 +61,52 @@ function estadoValidacionesPago() {
             botonFormaPago.classList.remove("text-danger");
             botonFormaPago.classList.add("is-valid");
             opcionesPago.classList.remove("is-invalid");
-
         }
         else {
+            botonFormaPago.classList.remove("is-valid");
             botonFormaPago.classList.add("is-invalid");
             botonFormaPago.classList.add("text-danger")
             opcionesPago.classList.remove("is-invalid");
         }
     }
-    
- else if (transferenciaBancaria.checked && !tarjetaCredito.checked ) {
-    /*document.getElementById("tCreditoInfo").classList.add("d-none");
-    document.getElementById("tBancariaInfo").classList.remove("d-none");*/
-    tarjetaCredito.checked = false;
-    numeroCuenta.getAttribute("disabled");
-    numeroCuenta.removeAttribute("disabled");
-    //numeroCuenta.setAttribute("disabled", "");
-    numeroTarjeta.setAttribute("disabled", "");
-    codigoSeguridad.setAttribute("disabled", "");
-    vencimientoTarjeta.setAttribute("disabled", "");
-    if (!numeroCuenta.checkValidity()){
-        botonFormaPago.classList.add("is-invalid");
-        botonFormaPago.classList.add("text-danger")
-        opcionesPago.classList.remove("is-invalid");
 
+    else if (transferenciaBancaria.checked && !tarjetaCredito.checked) {
+        /*document.getElementById("tCreditoInfo").classList.add("d-none");
+        document.getElementById("tBancariaInfo").classList.remove("d-none");*/
+        tarjetaCredito.checked = false;
+        numeroCuenta.getAttribute("disabled");
+        numeroCuenta.removeAttribute("disabled");
+        numeroTarjeta.setAttribute("disabled", "");
+        codigoSeguridad.setAttribute("disabled", "");
+        vencimientoTarjeta.setAttribute("disabled", "");
+        if (!numeroCuenta.checkValidity()) {
+            botonFormaPago.classList.remove("is-valid");
+            botonFormaPago.classList.add("is-invalid");
+            botonFormaPago.classList.add("text-danger")
+            opcionesPago.classList.remove("is-invalid");
+        }
+        else {
+            botonFormaPago.classList.remove("is-invalid");
+            botonFormaPago.classList.remove("text-danger");
+            botonFormaPago.classList.add("is-valid");
+            opcionesPago.classList.remove("is-invalid");
+        }
     }
-    else {
-        botonFormaPago.classList.remove("is-invalid");
-        botonFormaPago.classList.remove("text-danger");
-        botonFormaPago.classList.add("is-valid");
-        opcionesPago.classList.remove("is-invalid");
-    }
- }
- 
-
 };
+function validacionLinkPago() {
+    let chequeado = false
+    estadoValidacionesPago()
+    if (tarjetaCredito.checked || transferenciaBancaria.checked){
+        chequeado = true;
+    }
+    return chequeado
+}
 
 Array.prototype.slice.call(validacionCarrito)
     .forEach(function (validacionC) {
         validacionC.addEventListener('submit', function (event) {
-            if (!estadoValidacionesPago() || !validacionC.checkValidity()) {
+            
+            if (!validacionLinkPago() && !validacionC.checkValidity() && !estadoValidacionesDetallesEntrega()) {
                 event.preventDefault();
                 event.stopPropagation();
                 console.log(validacionC.checkValidity())
