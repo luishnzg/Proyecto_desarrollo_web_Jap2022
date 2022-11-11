@@ -15,14 +15,32 @@ let direccionNumero = document.getElementById("Esquina");
 let direccionEsquina = document.getElementById("Numero");
 let botonDetallesEntrega = document.getElementById("botonDetallesEntrega");
 
+
+function validacionLSCarrito () {
+let lSCarrito = JSON.parse(localStorage.getItem("carrito"));
+let validacion = false
+if (lSCarrito = []) {
+document.getElementById("alert-cart").innerHTML = `
+<div class="alert alert-danger" role="alert">
+  Para completar la compra debe seleccionar al menos un producto
+  <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+`
+validacion = true
+}
+return validacion
+};
 //Se crea esta iteracion para que cambie en tiempo real el aviso en los links de forma de pago y direccion de envio
 //de que falta que se complete un campo
+
 for (const input of validacionCarrito) {
     input.addEventListener("input", function () {
+        if (document.getElementById("formPagosYEnvio").classList.contains('was-validated')){
         estadoValidacionesPago();
-        estadoValidacionesDetallesEntrega();
+        estadoValidacionesDetallesEntrega();}
     })
 }
+
 //se creat esta funcion para agregar las validaciones al link de informacion de envio
 function estadoValidacionesDetallesEntrega() {
     let validacionEnvio = false
@@ -102,14 +120,19 @@ function validacionLinkPago() {
     return chequeado
 }
 
+
+
 Array.prototype.slice.call(validacionCarrito)
     .forEach(function (validacionC) {
         validacionC.addEventListener('submit', function (event) {
             
-            if (!validacionLinkPago() && !validacionC.checkValidity() && !estadoValidacionesDetallesEntrega()) {
+            if (!validacionC.checkValidity()) {
+                validacionLinkPago();
+                estadoValidacionesDetallesEntrega();
                 event.preventDefault();
                 event.stopPropagation();
-                console.log(validacionC.checkValidity())
+                validacionLSCarrito ();
+                //console.log(validacionC.checkValidity())
             }
 
             validacionC.classList.add('was-validated')
@@ -196,10 +219,10 @@ function showCartList(listaCarrito) {
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
     document.getElementById("subTotalCarrito").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito);
-    if (document.getElementById("entregaStandard").checked = true) {
+   /* if (document.getElementById("entregaStandard").checked = true) {
         document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05);
         document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.05) + appendtotalCarrito);
-    }
+    }*/
 
     document.getElementById("entregaPremium").addEventListener("click", function () {
         if (document.getElementById("entregaPremium").checked = true) {
