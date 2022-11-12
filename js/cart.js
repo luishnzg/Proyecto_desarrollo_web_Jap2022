@@ -45,6 +45,10 @@ function validacionLSCarrito() {
     }
     return validacion
 };
+//mensaje de compra con exito
+function compraExitosa() {
+    document.getElementById("alert-compraExitosa").classList.add("show");
+}
 //Se crea esta iteracion para que cambie en tiempo real el aviso en los links de forma de pago y direccion de envio
 //de que falta que se complete un campo
 
@@ -161,6 +165,9 @@ Array.prototype.slice.call(validacionCarrito)
                 estadoValidacionesDetallesEntrega();
                 event.preventDefault();
                 event.stopPropagation();
+            }
+            if (validacionLSCarrito() && validacionC.checkValidity()){
+                compraExitosa()
             }
 
             validacionC.classList.add('was-validated')

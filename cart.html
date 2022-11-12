@@ -40,8 +40,6 @@
       <div class="text-center p-4">
         <h2>Carrito de compras</h2>
       </div>
-      <!--Aqui va e div de la alerta-->
-
       <div class="row">
         <div class="col-8">
           <div id="cart" class="row row-cols-3">
@@ -61,8 +59,13 @@
 
           <!--  Comienza form element-->
           <form action="#" class="needs-validation" id="formPagosYEnvio" novalidate>
+            <!--Aqui va e div de la alerta-->
             <div id="alert-cart" class="alert alert-danger alert-dismissible fade" role="alert">
               Para completar la compra debe seleccionar al menos un producto
+              <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div id="alert-compraExitosa" class="alert alert-success alert-dismissible fade" role="alert">
+              ¡Compra Exitosa!
               <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <!-- <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>-->
