@@ -14,48 +14,86 @@ let direccionCalle = document.getElementById("Calle");
 let direccionNumero = document.getElementById("Esquina");
 let direccionEsquina = document.getElementById("Numero");
 let botonDetallesEntrega = document.getElementById("botonDetallesEntrega");
-
-
-function validacionLSCarrito () {
-let lSCarrito = JSON.parse(localStorage.getItem("carrito"));
-let validacion = false
-if (lSCarrito = []) {
-document.getElementById("alert-cart").innerHTML = `
-<div class="alert alert-danger" role="alert">
-  Para completar la compra debe seleccionar al menos un producto
-  <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-`
-validacion = true
-}
-return validacion
+let tiposDeEnvio = document.getElementById("tipoEnvio");
+let entregaExpress = document.getElementById("entregaExpress");
+let entregaPremium = document.getElementById("entregaPremium");
+let entregaStandard = document.getElementById("entregaStandard");
+//escucha de evento al elemento  con el input radio de la trajeta de credito para deshabilitar la informacion de pago de
+//la cuenta bacaria
+tarjetaCredito.addEventListener("click", function () {
+    document.getElementById("tBancariaInfo").classList.add("d-none");
+    document.getElementById("tCreditoInfo").classList.remove("d-none");
+})
+//escucha de evento al elemento  con el input radio de la transferencia bancaria para deshabilitar la informacion de pago de
+//la tarjeta de credito
+transferenciaBancaria.addEventListener("click", function () {
+    document.getElementById("tBancariaInfo").classList.remove("d-none");
+    document.getElementById("tCreditoInfo").classList.add("d-none");
+})
+// funcion que valida si hay un producto en el carrito en base a lo largo de la lista donde esta el array de productos
+//del carrito que esta en el local storage. Si el largo de la lista No es igual o mayor a 1, genera la alerta
+function validacionLSCarrito() {
+    let lSCarrito = JSON.parse(localStorage.getItem("carrito"));
+    let validacion = true
+    if (!(lSCarrito.length >= 1)) {
+        document.getElementById("alert-cart").classList.add("show");
+        validacion = false
+    }
+    else {
+        document.getElementById("alert-cart").classList.remove("show");
+        validacion = true
+    }
+    return validacion
 };
 //Se crea esta iteracion para que cambie en tiempo real el aviso en los links de forma de pago y direccion de envio
 //de que falta que se complete un campo
 
 for (const input of validacionCarrito) {
     input.addEventListener("input", function () {
-        if (document.getElementById("formPagosYEnvio").classList.contains('was-validated')){
-        estadoValidacionesPago();
-        estadoValidacionesDetallesEntrega();}
+        if (document.getElementById("formPagosYEnvio").classList.contains('was-validated')) {
+            estadoValidacionesPago();
+            estadoValidacionesDetallesEntrega();
+        }
     })
 }
 
-//se creat esta funcion para agregar las validaciones al link de informacion de envio
-function estadoValidacionesDetallesEntrega() {
-    let validacionEnvio = false
-    if (!direccionCalle.checkValidity() || !direccionNumero.checkValidity() || !direccionEsquina.checkValidity()) {
+//se creat esta funcion para agregar las validaciones al link de informacion de envio y al  al input radio de tipo de entrega
+function estadoValidacionesDetallesEntrega() { 
+    if ((!direccionCalle.checkValidity() || !direccionNumero.checkValidity() || !direccionEsquina.checkValidity()) 
+    && (!entregaExpress.checked && !entregaPremium.checked && !entregaStandard.checked)) {
         botonDetallesEntrega.classList.add("is-invalid");
-        botonDetallesEntrega.classList.add("text-danger")
-        botonDetallesEntrega.classList.remove("is-valid")
+        botonDetallesEntrega.classList.add("text-danger");
+        botonDetallesEntrega.classList.remove("is-valid");      
+        tiposDeEnvio.classList.add("text-danger");
+        tiposDeEnvio.classList.add("is-invalid");
+        tiposDeEnvio.classList.remove("is-valid");
+    }
+    else if ((direccionCalle.checkValidity() || direccionNumero.checkValidity() || direccionEsquina.checkValidity()) 
+    && (!entregaExpress.checked && !entregaPremium.checked && !entregaStandard.checked)) {
+        botonDetallesEntrega.classList.add("is-invalid");
+        botonDetallesEntrega.classList.add("text-danger");
+        botonDetallesEntrega.classList.remove("is-valid");
+        tiposDeEnvio.classList.add("text-danger");
+        tiposDeEnvio.classList.add("is-invalid");
+        tiposDeEnvio.classList.remove("is-valid");
+    }
+    else if ((!direccionCalle.checkValidity() || !direccionNumero.checkValidity() || !direccionEsquina.checkValidity()) 
+    && (entregaExpress.checked || entregaPremium.checked || entregaStandard.checked)) {
+        botonDetallesEntrega.classList.add("is-invalid");
+        botonDetallesEntrega.classList.add("text-danger");
+        botonDetallesEntrega.classList.remove("is-valid");
+        tiposDeEnvio.classList.remove("text-danger");
+        tiposDeEnvio.classList.remove("is-invalid");
+        tiposDeEnvio.classList.add("is-valid");
     }
     else {
         botonDetallesEntrega.classList.remove("is-invalid");
         botonDetallesEntrega.classList.remove("text-danger")
         botonDetallesEntrega.classList.add("is-valid")
-        validacionEnvio = true
+        tiposDeEnvio.classList.remove("text-danger");
+        tiposDeEnvio.classList.remove("is-invalid");
+        tiposDeEnvio.classList.add("is-valid");
     }
-    return validacionEnvio
 }
 
 //Se crea esta funcion para agregar las validaciones al link de formas de pago y 
@@ -64,12 +102,9 @@ function estadoValidacionesPago() {
     if (!tarjetaCredito.checked && !transferenciaBancaria.checked) {
         opcionesPago.classList.add("is-invalid");
         botonFormaPago.classList.add("is-invalid");
-        botonFormaPago.classList.add("text-danger")
+        botonFormaPago.classList.add("text-danger");
     }
     else if (tarjetaCredito.checked && !transferenciaBancaria.checked) {
-        /* document.getElementById("tBancariaInfo").classList.add("d-none");
-         document.getElementById("tCreditoInfo").classList.remove("d-none");*/
-        transferenciaBancaria.checked = false;
         numeroCuenta.setAttribute("disabled", "");
         numeroTarjeta.removeAttribute("disabled");
         codigoSeguridad.removeAttribute("disabled");
@@ -89,10 +124,6 @@ function estadoValidacionesPago() {
     }
 
     else if (transferenciaBancaria.checked && !tarjetaCredito.checked) {
-        /*document.getElementById("tCreditoInfo").classList.add("d-none");
-        document.getElementById("tBancariaInfo").classList.remove("d-none");*/
-        tarjetaCredito.checked = false;
-        numeroCuenta.getAttribute("disabled");
         numeroCuenta.removeAttribute("disabled");
         numeroTarjeta.setAttribute("disabled", "");
         codigoSeguridad.setAttribute("disabled", "");
@@ -111,28 +142,25 @@ function estadoValidacionesPago() {
         }
     }
 };
-function validacionLinkPago() {
-    let chequeado = false
-    estadoValidacionesPago()
-    if (tarjetaCredito.checked || transferenciaBancaria.checked){
-        chequeado = true;
-    }
-    return chequeado
-}
+
 
 
 
 Array.prototype.slice.call(validacionCarrito)
     .forEach(function (validacionC) {
         validacionC.addEventListener('submit', function (event) {
-            
+
             if (!validacionC.checkValidity()) {
-                validacionLinkPago();
+                estadoValidacionesPago();
                 estadoValidacionesDetallesEntrega();
                 event.preventDefault();
                 event.stopPropagation();
-                validacionLSCarrito ();
-                //console.log(validacionC.checkValidity())
+            }
+            if (!validacionLSCarrito()) {
+                estadoValidacionesPago();
+                estadoValidacionesDetallesEntrega();
+                event.preventDefault();
+                event.stopPropagation();
             }
 
             validacionC.classList.add('was-validated')
@@ -218,30 +246,20 @@ function showCartList(listaCarrito) {
     }
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
-    document.getElementById("subTotalCarrito").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito);
-   /* if (document.getElementById("entregaStandard").checked = true) {
-        document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05);
-        document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.05) + appendtotalCarrito);
-    }*/
-
-    document.getElementById("entregaPremium").addEventListener("click", function () {
-        if (document.getElementById("entregaPremium").checked = true) {
-            document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.15);
-            document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.15) + appendtotalCarrito);
-        }
+    document.getElementById("subTotalCarrito").innerHTML = "USD " + appendtotalCarrito;
+//Escuchas de evento click en cada tipo de entrega donde se puede calcular 
+//el valor del costo de envio y el total en base al tipo de entrega
+    entregaPremium.addEventListener("click", function () {
+            document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.15);
+            document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.15) + appendtotalCarrito);
     })
-    document.getElementById("entregaExpress").addEventListener("click", function () {
-        if (document.getElementById("entregaExpress").checked = true) {
-            document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.07);
-            document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.07) + appendtotalCarrito);
-
-        }
+    entregaExpress.addEventListener("click", function () {
+            document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.07);
+            document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.07) + appendtotalCarrito); 
     })
-    document.getElementById("entregaStandard").addEventListener("click", function () {
-        if (document.getElementById("entregaStandard").checked = true) {
-            document.getElementById("costoEnvio").innerHTML = "USD " + formatoMoneda.format(appendtotalCarrito * 0.05);
-            document.getElementById("total").innerHTML = "USD " + formatoMoneda.format((appendtotalCarrito * 0.05) + appendtotalCarrito);
-        }
+    entregaStandard.addEventListener("click", function () {
+            document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.05);
+            document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.05) + appendtotalCarrito);
     })
 
 }
