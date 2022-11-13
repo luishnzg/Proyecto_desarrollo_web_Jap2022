@@ -30,25 +30,7 @@ transferenciaBancaria.addEventListener("click", function () {
     document.getElementById("tBancariaInfo").classList.remove("d-none");
     document.getElementById("tCreditoInfo").classList.add("d-none");
 })
-// funcion que valida si hay un producto en el carrito en base a lo largo de la lista donde esta el array de productos
-//del carrito que esta en el local storage. Si el largo de la lista No es igual o mayor a 1, genera la alerta
-function validacionLSCarrito() {
-    let lSCarrito = JSON.parse(localStorage.getItem("carrito"));
-    let validacion = true
-    if (!(lSCarrito.length >= 1)) {
-        document.getElementById("alert-cart").classList.add("show");
-        validacion = false
-    }
-    else {
-        document.getElementById("alert-cart").classList.remove("show");
-        validacion = true
-    }
-    return validacion
-};
-//mensaje de compra con exito
-function compraExitosa() {
-    document.getElementById("alert-compraExitosa").classList.add("show");
-}
+
 //Se crea esta iteracion para que cambie en tiempo real el aviso en los links de forma de pago y direccion de envio
 //de que falta que se complete un campo
 
@@ -57,23 +39,14 @@ for (const input of validacionCarrito) {
         if (document.getElementById("formPagosYEnvio").classList.contains('was-validated')) {
             estadoValidacionesPago();
             estadoValidacionesDetallesEntrega();
+
         }
     })
 }
-
 //se creat esta funcion para agregar las validaciones al link de informacion de envio y al  al input radio de tipo de entrega
-function estadoValidacionesDetallesEntrega() { 
-    if ((!direccionCalle.checkValidity() || !direccionNumero.checkValidity() || !direccionEsquina.checkValidity()) 
-    && (!entregaExpress.checked && !entregaPremium.checked && !entregaStandard.checked)) {
-        botonDetallesEntrega.classList.add("is-invalid");
-        botonDetallesEntrega.classList.add("text-danger");
-        botonDetallesEntrega.classList.remove("is-valid");      
-        tiposDeEnvio.classList.add("text-danger");
-        tiposDeEnvio.classList.add("is-invalid");
-        tiposDeEnvio.classList.remove("is-valid");
-    }
-    else if ((direccionCalle.checkValidity() || direccionNumero.checkValidity() || direccionEsquina.checkValidity()) 
-    && (!entregaExpress.checked && !entregaPremium.checked && !entregaStandard.checked)) {
+function estadoValidacionesDetallesEntrega() {
+    if ((!direccionCalle.checkValidity() || !direccionNumero.checkValidity() || !direccionEsquina.checkValidity())
+        && (!entregaExpress.checked && !entregaPremium.checked && !entregaStandard.checked)) {
         botonDetallesEntrega.classList.add("is-invalid");
         botonDetallesEntrega.classList.add("text-danger");
         botonDetallesEntrega.classList.remove("is-valid");
@@ -81,8 +54,17 @@ function estadoValidacionesDetallesEntrega() {
         tiposDeEnvio.classList.add("is-invalid");
         tiposDeEnvio.classList.remove("is-valid");
     }
-    else if ((!direccionCalle.checkValidity() || !direccionNumero.checkValidity() || !direccionEsquina.checkValidity()) 
-    && (entregaExpress.checked || entregaPremium.checked || entregaStandard.checked)) {
+    else if ((direccionCalle.checkValidity() || direccionNumero.checkValidity() || direccionEsquina.checkValidity())
+        && (!entregaExpress.checked && !entregaPremium.checked && !entregaStandard.checked)) {
+        botonDetallesEntrega.classList.add("is-invalid");
+        botonDetallesEntrega.classList.add("text-danger");
+        botonDetallesEntrega.classList.remove("is-valid");
+        tiposDeEnvio.classList.add("text-danger");
+        tiposDeEnvio.classList.add("is-invalid");
+        tiposDeEnvio.classList.remove("is-valid");
+    }
+    else if ((!direccionCalle.checkValidity() || !direccionNumero.checkValidity() || !direccionEsquina.checkValidity())
+        && (entregaExpress.checked || entregaPremium.checked || entregaStandard.checked)) {
         botonDetallesEntrega.classList.add("is-invalid");
         botonDetallesEntrega.classList.add("text-danger");
         botonDetallesEntrega.classList.remove("is-valid");
@@ -126,7 +108,6 @@ function estadoValidacionesPago() {
             opcionesPago.classList.remove("is-invalid");
         }
     }
-
     else if (transferenciaBancaria.checked && !tarjetaCredito.checked) {
         numeroCuenta.removeAttribute("disabled");
         numeroTarjeta.setAttribute("disabled", "");
@@ -146,32 +127,28 @@ function estadoValidacionesPago() {
         }
     }
 };
-
-
-
-
+//Mensaje de compra exitosa
+if (window.location.href.includes("#")) {
+    document.getElementById("alert-compraExitosa").classList.add("show");
+}
 Array.prototype.slice.call(validacionCarrito)
     .forEach(function (validacionC) {
         validacionC.addEventListener('submit', function (event) {
-
+            estadoValidacionesPago();
+            estadoValidacionesDetallesEntrega();
             if (!validacionC.checkValidity()) {
-                estadoValidacionesPago();
-                estadoValidacionesDetallesEntrega();
                 event.preventDefault();
                 event.stopPropagation();
             }
-            if (!validacionLSCarrito()) {
-                estadoValidacionesPago();
-                estadoValidacionesDetallesEntrega();
+            let lSCarrito = JSON.parse(localStorage.getItem("carrito"));
+            // conicional que valida si hay un producto en el carrito en base a lo largo de la lista donde esta el array de productos
+            //del carrito que esta en el local storage. Si el largo de la lista No es igual o mayor a 1, genera la alerta
+            if (!(lSCarrito.length >= 1)) {
+                document.getElementById("alert-cart").classList.add("show");
                 event.preventDefault();
                 event.stopPropagation();
             }
-            if (validacionLSCarrito() && validacionC.checkValidity()){
-                compraExitosa()
-            }
-
             validacionC.classList.add('was-validated')
-
         }, false)
     });
 ;
@@ -239,7 +216,6 @@ function showCartList(listaCarrito) {
         appendListaCarritoItem +=
             `
         <li class="list-group-item"> ${item.count} x ${item.name} = ${item.currency} ${item.count * item.unitCost} 
-        <button type="button" class="btn-close float-end"  aria-label="Close"></button>
         </li>
         
         `
@@ -254,19 +230,19 @@ function showCartList(listaCarrito) {
     document.getElementById("cart").innerHTML = appendListaCarrito;
     document.getElementById("cartInfoItem").innerHTML = appendListaCarritoItem;
     document.getElementById("subTotalCarrito").innerHTML = "USD " + appendtotalCarrito;
-//Escuchas de evento click en cada tipo de entrega donde se puede calcular 
-//el valor del costo de envio y el total en base al tipo de entrega
+    //Escuchas de evento click en cada tipo de entrega donde se puede calcular 
+    //el valor del costo de envio y el total en base al tipo de entrega
     entregaPremium.addEventListener("click", function () {
-            document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.15);
-            document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.15) + appendtotalCarrito);
+        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.15);
+        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.15) + appendtotalCarrito);
     })
     entregaExpress.addEventListener("click", function () {
-            document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.07);
-            document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.07) + appendtotalCarrito); 
+        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.07);
+        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.07) + appendtotalCarrito);
     })
     entregaStandard.addEventListener("click", function () {
-            document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.05);
-            document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.05) + appendtotalCarrito);
+        document.getElementById("costoEnvio").innerHTML = "USD " + (appendtotalCarrito * 0.05);
+        document.getElementById("total").innerHTML = "USD " + ((appendtotalCarrito * 0.05) + appendtotalCarrito);
     })
 
 }
@@ -289,9 +265,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     );
-    /*document.getElementById("boton-vaciar").addEventListener("click", function () {
-        carritoDelLocalStorage = [];
-        showCartList(carritoDelLocalStorage);
-
-    })*/
 });
