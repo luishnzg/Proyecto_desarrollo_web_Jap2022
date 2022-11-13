@@ -131,6 +131,15 @@ function estadoValidacionesPago() {
 if (window.location.href.includes("#")) {
     document.getElementById("alert-compraExitosa").classList.add("show");
 }
+//se usa el constrcutor array.prototype para crear una nueva lista a partir de los nodos que me trae validacionCarrito
+// que busca el elemento que tenga la clase needs validation. La nueva lista se usa con el metodo slice y se usa el metodo call
+// para que podamos usar la variable validacionCarrito como parametro en el metodo slice y transformalo en un 
+// objeto array-like. Luego se itera en esa nueva lista con foreach y a cada elemento de esa lista se le agrega una escucha de 
+//evento cuando se haga submit en alguno de esos elemtnos. Cuando se hace submit se activa una funcion que contiene
+// otras funciones necesarias para la validacion personalizada de los inputs y dos condicionales que evaluan
+// si los inputs no estan validados o si la lista del carrito en el local storage esta vacio se previene la propagacion 
+//del evento y la ejecucion del evento en si.
+
 Array.prototype.slice.call(validacionCarrito)
     .forEach(function (validacionC) {
         validacionC.addEventListener('submit', function (event) {
