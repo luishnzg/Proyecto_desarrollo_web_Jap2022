@@ -7,6 +7,7 @@
   <title>eMercado - Todo lo que busques está aquí</title>
   <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
   <style>
     .bd-placeholder-img {
@@ -52,9 +53,53 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <h1>Perfil</h1>
+      <hr>
+      <div class="w-50">
+        <div class="row row-cols-2 gy-3">
+          <div class="col">
+            <div class="form-floating">
+              <input type="text" name="primerNombre" id="primerNombre" class="form-control" placeholder="primerNombre">
+              <label for="primerNombre">Primer nombre</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-floating">
+              <input type="text" name="segundoNombre" id="segundoNombre" class="form-control" placeholder="segundoNombre">
+              <label for="segundoNombre">Segundo nombre</label>
+            </div>
+  
+          </div>
+          <div class="col">
+            <div class="form-floating">
+              <input type="text" name="primerApellido" id="primerApellido" class="form-control"
+                placeholder="primerApellido">
+              <label for="primerApellido">Primer apellido</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-floating">
+              <input type="text" name="segundoApellido" id="segundoApellido" class="form-control"
+                placeholder="segundoApellido">
+              <label for="segundoApellido">Segundo apellido</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group">
+              <label for="email" class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></label>
+              <input type="email" name="email" id="email" class="form-control">
+            </div>
+          </div>
+          <div class="col">
+            <div class="input-group">
+              <label for="telefono" class="input-group-text"><i class="fa fa-phone"></i></label>
+              <input type="tel" name="telefono" id="telefono" class="form-control">
+            </div>
+          </div>
+        </div>
+
       </div>
+      
     </div>
   </main>
   <footer class="text-muted">
