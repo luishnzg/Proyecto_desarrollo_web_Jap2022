@@ -8,8 +8,8 @@ const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 //se crea un metodo en una constante para crear un formato numerico
 const  formatoMoneda = Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
-let usuarioActivo = localStorage.getItem('usuario');
-//login = URL("index.html");
+let usuarioActivo = JSON.parse(localStorage.getItem('usuario'));
+
 
 document.addEventListener("DOMContentLoaded", function (){
   if(window.location.href.indexOf("index.html") == -1) {
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function (){
   }
 })
 
-class usuarioNuevo {} 
+
 
 
 // se modifica el usuario para que sea un boton despegable mostrando diferentes opciones en las cuales te puede redireccionar
@@ -28,7 +28,7 @@ document.getElementById("usuarioNav").innerHTML = `
     
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#"  role="button" data-bs-toggle="dropdown">
-      ${localStorage.getItem('usuario')}
+      ${usuarioActivo.correo}
       </a>
       <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>

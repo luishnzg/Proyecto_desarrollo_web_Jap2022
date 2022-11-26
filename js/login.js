@@ -15,6 +15,19 @@ else {
 )
 // funcion creada para guardar en la memoria local la llave usuario y su valor. El valor es el dato que ingresamos en el elemento iput de tipo email con id email
 function seteoLocalStorage() {
-    localStorage.setItem('usuario', email.value)
+    let usuario = new usuarioNuevo;
+    usuario.correo = email.value;
+    localStorage.setItem('usuario', JSON.stringify(usuario))
     localStorage.setItem('usuarioJap', 25801)
 }
+
+class usuarioNuevo {
+    constructor(primerNombre, segundoNombre, primerApellido, segundoApellido, correo, telefono){
+      this.primerNombre = primerNombre;
+      this.segundoNombre = segundoNombre;
+      this.primerApellido = primerApellido;
+      this.segundoApellido = segundoApellido;
+      this.correo = correo;
+      this.telefono = telefono;
+    }
+  } 
