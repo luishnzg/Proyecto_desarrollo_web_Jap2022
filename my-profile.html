@@ -52,61 +52,66 @@
     </div>
   </nav>
   <main>
-    <div class="container my-5 border">
-      <div class="d-flex align-content-center justify-content-center ">
-        <div class="w-50">   
-        <div class="mb-5">
-          <h1 >Perfil</h1>
-        </div>
-        <hr>
-        <div class="row row-cols-2 gy-3 mb-5">
-          <div>
-            <div class="form-floating">
-              <input type="text" name="primerNombre" id="primerNombre" class="form-control" placeholder="primerNombre" required>
-              <label for="primerNombre">Primer nombre <span class="text-danger fw-bold">*</span></label>
-            </div>
-          </div>
-          <div>
-            <div class="form-floating">
-              <input type="text" name="segundoNombre" id="segundoNombre" class="form-control"
-                placeholder="segundoNombre">
-              <label for="segundoNombre">Segundo nombre</label>
-            </div>
 
+    <div class="container my-5">
+      <div class="d-flex align-content-center justify-content-center ">
+        <div class="w-50">
+          <div class="mb-5 row">
+              <h1 class="col align-self-end">Perfil</h1>
+              <img id="profileImage" src="" alt="userImage" class=" col-2 w-25  img-fluid img-thumbnail">
           </div>
-          <div>
-            <div class="form-floating">
-              <input type="text" name="primerApellido" id="primerApellido" class="form-control"
-                placeholder="primerApellido">
-              <label for="primerApellido">Primer apellido <span class="text-danger fw-bold">*</span></label>
+          <hr>
+          <div class="row row-cols-2 gy-3 mb-5">
+            <div>
+              <div class="form-floating">
+                <input type="text" name="primerNombre" id="primerNombre" class="form-control" placeholder="primerNombre"
+                  required>
+                <label for="primerNombre">Primer nombre <span class="text-danger fw-bold">*</span></label>
+              </div>
+            </div>
+            <div>
+              <div class="form-floating">
+                <input type="text" name="segundoNombre" id="segundoNombre" class="form-control"
+                  placeholder="segundoNombre">
+                <label for="segundoNombre">Segundo nombre</label>
+              </div>
+
+            </div>
+            <div>
+              <div class="form-floating">
+                <input type="text" name="primerApellido" id="primerApellido" class="form-control"
+                  placeholder="primerApellido" required>
+                <label for="primerApellido">Primer apellido <span class="text-danger fw-bold">*</span></label>
+              </div>
+            </div>
+            <div>
+              <div class="form-floating">
+                <input type="text" name="segundoApellido" id="segundoApellido" class="form-control"
+                  placeholder="segundoApellido">
+                <label for="segundoApellido">Segundo apellido</label>
+              </div>
+            </div>
+            <div>
+              <div class="input-group">
+                <label for="emailProfile" class="input-group-text"><i class="fa fa-at" aria-hidden="true"></i><span
+                    class="text-danger fw-bold">*</span></label>
+                <input type="email" name="emailProfile" id="emailProfile" class="form-control" required>
+              </div>
+            </div>
+            <div>
+              <div class="input-group">
+                <label for="telefono" class="input-group-text"><i class="fa fa-phone"></i></label>
+                <input type="tel" name="telefono" id="telefono" class="form-control">
+              </div>
             </div>
           </div>
-          <div>
-            <div class="form-floating">
-              <input type="text" name="segundoApellido" id="segundoApellido" class="form-control"
-                placeholder="segundoApellido">
-              <label for="segundoApellido">Segundo apellido</label>
-            </div>
-          </div>
-          <div>
-            <div class="input-group">
-              <label for="emailProfile" class="input-group-text"><i class="fa fa-at" aria-hidden="true"></i><span class="text-danger fw-bold">*</span></label>
-              <input type="email" name="emailProfile" id="emailProfile" class="form-control">
-            </div>
-          </div>
-          <div>
-            <div class="input-group">
-              <label for="telefono" class="input-group-text"><i class="fa fa-phone"></i></label>
-              <input type="tel" name="telefono" id="telefono" class="form-control">
-            </div>
-          </div>
+          <input type="file" name="archivo" id="archivo" class="form-control">
+          <hr>
+          <button id="btnGuardarCambio" type="submit" class="btn btn-primary">Guardar Cambios</button>
         </div>
-        <hr>
-        <button type="button" class="btn btn-primary">Guardar Cambios</button>
       </div>
-      
     </div>
-    </div>
+
   </main>
   <footer class="text-muted">
     <div class="container">

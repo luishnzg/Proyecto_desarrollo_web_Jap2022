@@ -6,6 +6,8 @@ const PRODUCT_INFO_COMMENTS_URL = "https://japceibal.github.io/emercado-api/prod
 const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
+
+
 //se crea un metodo en una constante para crear un formato numerico
 const  formatoMoneda = Intl.NumberFormat('en-US', { maximumSignificantDigits: 3 });
 let usuarioActivo = JSON.parse(localStorage.getItem('usuario'));
@@ -39,7 +41,7 @@ document.getElementById("usuarioNav").innerHTML = `
 `;
 
 function cerrarSesion() {
-  localStorage.clear();
+  localStorage.removeItem("usuario");
   window.location.href = "index.html";
 };
 
