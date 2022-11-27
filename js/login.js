@@ -15,7 +15,11 @@ document.getElementById("botonlogin").addEventListener("click", function redirec
 
 }
 )
-// funcion creada para guardar en la memoria local la llave usuario y su valor. El valor es el dato que ingresamos en el elemento iput de tipo email con id email
+// funcion creada para guardar en el local storage
+//la informacion del correo ingresado como un nuevo usuario, se valida si el el correo fue previamente
+//ingresado, si fue ingresado el valor que toma para ingresar a la sesion es de ese usuario, si no hay usuario previamente
+//ingresado lo que hace es que crea un objeto de usuario nuevo, lo agrega a la lista de usuario y se ingresa a la pagina
+//con los datos del nuevo usuario creado.
 function seteoLocalStorage() {
     let usuario = new usuarioNuevo;
     usuario.primerNombre = "";
@@ -52,6 +56,7 @@ function seteoLocalStorage() {
     localStorage.setItem('usuarioJap', 25801)
 }
 
+//clase para crear un objeto de usuario
 class usuarioNuevo {
     constructor(primerNombre, segundoNombre, primerApellido, segundoApellido, correo, telefono, imagen) {
         this.primerNombre = primerNombre;
